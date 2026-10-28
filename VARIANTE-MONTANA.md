@@ -24,7 +24,7 @@ Lo propio de cada complejo vive en cuatro lugares; el resto no se toca.
 | `src/content/` | `keystatic.config.ts`, `src/content.config.ts` |
 | `src/assets/fotos/` y los íconos de `public/` | `astro.config.mjs`, `scripts/` |
 
-1. **Copiar.** Cloná este repo en una carpeta nueva, borrá `.git` y arrancá un historial propio (`git init -b main`). Después `npm install`.
+1. **Copiar.** Cloná la plantilla siguiendo el paso 1 de `NUEVO-COMPLEJO.md` y aplicá la variante con `npm run variante -- montana` (ver más abajo).
 2. **Configuración.** `site.json`: nombre, nombre corto (va grande en la portada: la primera palabra derecha y el resto en itálica), WhatsApp de prueba, `modoPropuesta: true`, dirección y mapa.
 3. **Colores.** En `tema.css` cambiá los valores de la paleta (`carbon`, `crema`, `cobre`, `ambar`, `salvia`, `piedra`), no los nombres. Los componentes usan funciones (`fondo`, `tinta`, `acento`, `boton`…) que toman un valor de día y otro de noche. Revisá el contraste en los dos modos: es lo primero que falla.
 4. **Tipografías.** En `tema.mjs`. Para que no se parezca a esta: otra serif de títulos con itálica y otra sans de textos. Un solo peso de títulos.
@@ -32,6 +32,6 @@ Lo propio de cada complejo vive en cuatro lugares; el resto no se toca.
 6. **Fotos.** Dos panorámicas anchas para la portada (día y noche, 3000 px o más), entre 1 y 6 fotos por cabaña, una del spa, una de la zona y una por momento del fin de semana.
 7. **Revisión.** `npm run check`, `npm run build`, 375 px y escritorio, día y noche, Lighthouse móvil.
 
-## Llevarla a la plantilla
+## En la plantilla
 
-La plantilla vive en la rama `plantilla-reutilizable` de `alisos-del-rio-propuesta`. Esta variante todavía no está ahí: se armó en este repo para no tocar el de Alisos. Para sumarla, la opción más simple es dejar este repo como plantilla de la variante montaña, con este documento como guía, y enlazarlo desde `NUEVO-COMPLEJO.md` de Alisos.
+La variante también está en la plantilla, en `variantes/montana/` de `alisos-del-rio-propuesta` (rama `variante-montana`, a partir de `plantilla-reutilizable`). Una propuesta nueva la toma de ahí con `npm run variante -- montana`, sin copiar este repo. Si acá se mejora un componente, la mejora se lleva también a esa carpeta.

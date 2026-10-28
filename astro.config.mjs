@@ -32,7 +32,9 @@ const urlSitio = site.urlSitio || urlDelHosting();
 
 /** @param {'titulos' | 'textos'} rol */
 function fuente(rol) {
-  const { nombre, pesos, estilos, respaldo } = fuentes[rol];
+  const { nombre, pesos, respaldo } = fuentes[rol];
+  // La itálica es opcional: se pide con `estilos` en tema.mjs.
+  const estilos = 'estilos' in fuentes[rol] ? fuentes[rol].estilos : ['normal'];
   return {
     provider: fontProviders.fontsource(),
     name: nombre,
