@@ -1,0 +1,36 @@
+---
+// Preparado y apagado: se muestra solo con mercadoPago.activo = true y un
+// link de pago cargado (ver src/config/site.json).
+import { mostrarSena, site } from '../../config/site';
+import IconoMarca from '../IconoMarca.astro';
+---
+
+{
+  mostrarSena && (
+    <section id="sena" class="bg-fondo pb-16">
+      <div class="contenedor">
+        <div
+          class="flex flex-col gap-6 rounded-[1.5rem] border border-linea bg-superficie p-7 sm:p-10 lg:flex-row lg:items-center lg:justify-between"
+          data-aparece
+        >
+          <div class="max-w-xl">
+            <h2 class="text-3xl leading-tight sm:text-4xl">¿Ya les confirmamos la reserva?</h2>
+            <p class="mt-2 text-lg text-tinta-suave">
+              Paguen la seña online, con tarjeta o dinero en cuenta, y la fecha queda asegurada.
+            </p>
+          </div>
+          <a
+            href={site.mercadoPago.link}
+            target="_blank"
+            rel="noopener"
+            class="btn btn-contorno shrink-0"
+            data-evento="sena_click"
+          >
+            <IconoMarca marca="mercadopago" class="size-6" />
+            Pagar seña con Mercado Pago
+          </a>
+        </div>
+      </div>
+    </section>
+  )
+}

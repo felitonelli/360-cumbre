@@ -1,0 +1,49 @@
+---
+import { Picture } from 'astro:assets';
+import { complejo } from '../../lib/contenido';
+import Encabezado from '../Encabezado.astro';
+import Icono from '../Icono.astro';
+import Sierra from '../Sierra.astro';
+import Texto from '../Texto.astro';
+
+const { secciones, zona } = await complejo();
+const { sobretitulo, titulo, texto } = secciones.zona;
+---
+
+<section id="el-durazno" class="seccion bg-fondo">
+  <Sierra variante={3} />
+  <div class="contenedor grid items-center gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-20">
+    <div class="relative" data-aparece="arco">
+      <Picture
+        src={zona.foto}
+        alt={zona.fotoAlt}
+        formats={['avif']}
+        quality={55}
+        fallbackFormat="webp"
+        widths={[480, 800, 1200]}
+        sizes="(min-width: 1024px) 38rem, 92vw"
+        class="aspect-4/5 w-full rounded-t-[2.5rem] rounded-b-[1.25rem] object-cover shadow-hondo sm:aspect-4/3 lg:aspect-4/5"
+      />
+    </div>
+    <div>
+      <Encabezado sobretitulo={sobretitulo} titulo={titulo} texto={texto} />
+      <ul class="mt-9 space-y-6" data-aparece>
+        {
+          zona.puntos.map((p) => (
+            <li class="flex gap-4">
+              <span class="grid size-11 shrink-0 place-items-center rounded-full border border-linea text-acento">
+                <Icono nombre={p.icono} class="size-5" />
+              </span>
+              <div>
+                <p class="font-display text-2xl leading-tight">{p.titulo}</p>
+                <p class="mt-1 text-tinta-suave">
+                  <Texto texto={p.texto} />
+                </p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

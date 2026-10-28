@@ -1,0 +1,21 @@
+---
+// Sobretítulo, título y bajada de cada sección. En el título, lo que va entre
+// guiones bajos sale en itálica.
+import { resaltar, titular } from '../lib/texto';
+
+interface Props {
+  sobretitulo?: string;
+  titulo: string;
+  texto?: string;
+  centrado?: boolean;
+  class?: string;
+}
+
+const { sobretitulo, titulo, texto, centrado = false, class: clase } = Astro.props;
+---
+
+<header class:list={[centrado && 'mx-auto max-w-3xl text-center', clase]} data-aparece>
+  {sobretitulo && <p class="sobretitulo">{sobretitulo}</p>}
+  <h2 class="titulo" set:html={titular(titulo)} />
+  {texto && <p class:list={['bajada', centrado && 'mx-auto']} set:html={resaltar(texto)} />}
+</header>

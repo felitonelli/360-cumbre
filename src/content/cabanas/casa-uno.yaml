@@ -1,0 +1,20 @@
+nombre: Casa uno [a confirmar]
+capacidad: 2
+resumen: 'Lo que la hace distinta: [a confirmar].'
+detalles:
+  - icono: bed-double
+    texto: 'Cama: [a confirmar]'
+  - icono: mountain
+    texto: 'Deck con vista a las sierras: [a confirmar]'
+  - icono: flame
+    texto: 'Hogar o calefacción: [a confirmar]'
+  - icono: coffee
+    texto: 'Cocina y desayuno: [a confirmar]'
+fotos:
+  - foto: ../../assets/fotos/cabanas/casa-uno/exterior.jpg
+    alt: Casa de piedra con las luces del balcón encendidas al anochecer
+  - foto: ../../assets/fotos/cabanas/casa-uno/estar.jpg
+    alt: Living con hogar de piedra y vigas de madera
+  - foto: ../../assets/fotos/cabanas/casa-uno/deck.jpg
+    alt: Deck de madera con vista a las sierras
+orden: 1

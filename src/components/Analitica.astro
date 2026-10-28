@@ -1,0 +1,36 @@
+---
+// Se incluye solo con analitica.activa = true (ver src/config/site.json).
+// Eventos: whatsapp_click, consulta_enviada, sena_click, como_llegar_click, resenas_click.
+import { site } from '../config/site';
+
+const { ga4Id, plausibleDominio } = site.analitica;
+---
+
+{
+  ga4Id && (
+    <>
+      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`} />
+      <script is:inline define:vars={{ ga4Id }}>
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () {
+          window.dataLayer.push(arguments);
+        };
+        window.gtag('js', new Date());
+        window.gtag('config', ga4Id);
+      </script>
+    </>
+  )
+}
+{plausibleDominio && <script is:inline defer data-domain={plausibleDominio} src="https://plausible.io/js/script.js" />}
+
+<script>
+  import { registrar } from '../scripts/analitica';
+
+  // Cualquier elemento con data-evento registra un clic.
+  document.addEventListener('click', (e) => {
+    const elemento = (e.target as Element).closest<HTMLElement>('[data-evento]');
+    if (elemento?.dataset.evento) {
+      registrar(elemento.dataset.evento, { ubicacion: elemento.dataset.ubicacion ?? '' });
+    }
+  });
+</script>

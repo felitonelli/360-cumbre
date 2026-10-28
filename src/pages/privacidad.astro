@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../config/site';
+---
+
+<Base titulo="Privacidad" descripcion={`Qué datos usa y qué datos no guarda el sitio de ${site.nombre}.`}>
+  <article class="contenedor seccion max-w-3xl pt-28 sm:pt-36">
+    <p class="sobretitulo">Privacidad</p>
+    <h1 class="titulo">Tus datos, en pocas palabras</h1>
+
+    <div class="mt-8 space-y-8 text-lg text-tinta-suave">
+      <section>
+        <h2 class="text-2xl font-semibold text-tinta">El formulario de consulta</h2>
+        <p class="mt-2">
+          Lo que completás (fechas, cantidad de personas, comentario) no se guarda en este sitio ni se envía a ningún
+          servidor nuestro. Solo se usa para armar el mensaje que después vos decidís mandar por WhatsApp. A partir de
+          ahí, la conversación queda en WhatsApp, entre vos y {site.nombre}.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold text-tinta">Mapa</h2>
+        <p class="mt-2">
+          El mapa de la sección «Cómo llegar» lo provee Google Maps. Al cargarlo, Google puede recibir datos técnicos de
+          tu navegador (como la dirección IP) según su propia política de privacidad.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold text-tinta">Estadísticas de visitas</h2>
+        {
+          site.analitica.activa ? (
+            <p class="mt-2">
+              Usamos una herramienta de estadísticas para saber cuántas personas visitan el sitio y cuántas consultan
+              por WhatsApp. No la usamos para identificarte ni para mostrarte publicidad.
+            </p>
+          ) : (
+            <p class="mt-2">Este sitio no usa herramientas de estadísticas ni cookies de seguimiento.</p>
+          )
+        }
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold text-tinta">Modo día o noche</h2>
+        <p class="mt-2">
+          Si elegís el modo día o el modo noche, el sitio lo recuerda en tu propio navegador para la próxima visita. No
+          sale de tu dispositivo.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold text-tinta">Consultas</h2>
+        <p class="mt-2">
+          Si tenés alguna duda sobre este tema, escribinos por WhatsApp desde el botón que está en todas las páginas.
+        </p>
+      </section>
+    </div>
+
+    <a href="/" class="btn btn-contorno mt-10">Volver al inicio</a>
+  </article>
+</Base>

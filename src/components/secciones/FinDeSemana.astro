@@ -1,0 +1,60 @@
+---
+import { Picture } from 'astro:assets';
+import { complejo } from '../../lib/contenido';
+import Encabezado from '../Encabezado.astro';
+import Sierra from '../Sierra.astro';
+import Texto from '../Texto.astro';
+
+const { secciones, finde } = await complejo();
+const { sobretitulo, titulo, texto } = secciones.finde;
+---
+
+<section id="fin-de-semana" class="seccion overflow-hidden bg-fondo pt-6 sm:pt-10">
+  <Sierra variante={1} soloLinea class="mb-14 sm:mb-20" />
+  <div class="contenedor">
+    <Encabezado sobretitulo={sobretitulo} titulo={titulo} texto={texto} centrado />
+
+    <!-- Línea de tiempo: a la izquierda en el celular, al medio en pantallas anchas. -->
+    <ol
+      class="relative mx-auto mt-14 max-w-5xl before:absolute before:top-3 before:bottom-3 before:left-[0.6875rem] before:w-px before:bg-linea sm:mt-20 lg:before:left-1/2"
+    >
+      {
+        finde.map((m, i) => (
+          <li
+            class:list={[
+              'relative grid grid-cols-[1.375rem_minmax(0,1fr)] gap-x-5 pb-14 last:pb-0 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-x-28 lg:pb-20',
+            ]}
+            data-aparece
+          >
+            <span
+              class="brasa absolute top-1.5 left-0 size-[1.375rem] rounded-full border-2 border-acento bg-fondo after:absolute after:inset-1 after:rounded-full after:bg-acento lg:left-1/2 lg:-translate-x-1/2"
+              aria-hidden="true"
+            />
+            <div class:list={['col-start-2 lg:row-start-1 lg:self-center', i % 2 ? 'lg:col-start-2' : 'lg:col-start-1 lg:text-right']}>
+              <p class="sobretitulo">{m.cuando}</p>
+              <h3 class="mt-2 text-[2.1rem] leading-[1.05] sm:text-4xl">{m.titulo}</h3>
+              <p class="mt-2 text-tinta-suave lg:text-lg">
+                <Texto texto={m.texto} />
+              </p>
+            </div>
+            <div class:list={['col-start-2 mt-5 lg:row-start-1 lg:mt-0', i % 2 ? 'lg:col-start-1' : 'lg:col-start-2']}>
+              <Picture
+                src={m.foto}
+                alt={m.fotoAlt}
+                formats={['avif']}
+                quality={55}
+                fallbackFormat="webp"
+                widths={[360, 560, 800]}
+                sizes="(min-width: 1024px) 26rem, 80vw"
+                class:list={[
+                  'aspect-3/2 w-full object-cover shadow-hondo lg:aspect-4/3',
+                  i % 2 ? 'rounded-[1.25rem] rounded-tl-[3rem]' : 'rounded-[1.25rem] rounded-tr-[3rem]',
+                ]}
+              />
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

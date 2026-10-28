@@ -1,0 +1,83 @@
+/* Paleta del complejo, variante "montaña / premium". Es el único archivo de
+   colores que cambia de un sitio a otro.
+
+   La página tiene dos modos, noche y día, y los componentes no nombran tonos
+   sino funciones, que cambian de valor según el modo:
+
+   fondo          fondo de la página
+   superficie     tarjetas, campos y bloques sobre el fondo
+   tinta          texto principal
+   tinta-suave    texto secundario
+   linea          bordes y separadores
+   acento         detalles, sobretítulos, íconos y links
+   etiqueta       datos chicos de segundo plano
+   boton          botones; boton-hover al pasar el mouse
+   sobre-boton    texto encima del botón
+
+   Las secciones con la clase .respiro usan los valores del otro modo: de
+   noche son claras y de día, oscuras. Así la página alterna sin perder el tono.
+
+   Contraste (AA, 4,5:1 con texto chico), revisado con estos valores:
+   tinta y tinta-suave sobre fondo y superficie en los dos modos, acento
+   sobre fondo en los dos modos y sobre-boton sobre boton y boton-hover.
+
+   Esta paleta: carbón cálido y crema del logo, cobre del Linktree, ámbar de
+   los fogones, salvia de los arbustos y piedra de los muros. */
+@theme static {
+  --color-carbon-950: #14110f;
+  --color-carbon-900: #1e1b18;
+  --color-carbon-800: #27221e;
+  --color-carbon-700: #363029;
+
+  --color-crema-50: #faf6ef;
+  --color-crema-100: #f3ede2;
+  --color-crema-200: #e9dfcf;
+  --color-crema-300: #d9cbb5;
+
+  --color-cobre-600: #a65a27;
+  --color-cobre-700: #8f4a1f;
+
+  --color-ambar-300: #f2c47e;
+  --color-ambar-500: #e8a33d;
+
+  --color-salvia-400: #a9b799;
+  --color-salvia-700: #56654a;
+
+  --color-piedra-300: #c9bfb3;
+  --color-piedra-400: #b9aea2;
+  --color-piedra-700: #5e554d;
+}
+
+/* Valores de cada función en cada modo. */
+:root,
+[data-modo='dia'] .respiro,
+.siempre-noche {
+  --fondo: var(--color-carbon-900);
+  --superficie: var(--color-carbon-800);
+  --tinta: var(--color-crema-100);
+  --tinta-suave: var(--color-piedra-400);
+  --linea: rgb(243 237 226 / 0.16);
+  --acento: var(--color-ambar-500);
+  --etiqueta: var(--color-salvia-400);
+  --grano: 0.07;
+  color-scheme: dark;
+}
+
+[data-modo='dia'],
+:root:not([data-modo='dia']) .respiro {
+  --fondo: var(--color-crema-100);
+  --superficie: var(--color-crema-50);
+  --tinta: var(--color-carbon-900);
+  --tinta-suave: var(--color-piedra-700);
+  --linea: rgb(30 27 24 / 0.16);
+  --acento: var(--color-cobre-700);
+  --etiqueta: var(--color-salvia-700);
+  --grano: 0.035;
+  color-scheme: light;
+}
+
+:root {
+  --boton: var(--color-cobre-600);
+  --boton-hover: var(--color-cobre-700);
+  --sobre-boton: #fff8ef;
+}

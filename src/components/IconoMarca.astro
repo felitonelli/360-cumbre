@@ -1,0 +1,23 @@
+---
+// Logos de marcas (Simple Icons). Solo se incluyen los que se usan.
+import { siFacebook, siGooglemaps, siInstagram, siMercadopago, siWhatsapp } from 'simple-icons';
+
+const MARCAS = {
+  whatsapp: siWhatsapp,
+  instagram: siInstagram,
+  facebook: siFacebook,
+  mercadopago: siMercadopago,
+  maps: siGooglemaps,
+};
+
+interface Props {
+  marca: keyof typeof MARCAS;
+  class?: string;
+}
+
+const { marca, class: clase = 'size-6' } = Astro.props;
+---
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class={clase} aria-hidden="true">
+  <path d={MARCAS[marca].path}></path>
+</svg>

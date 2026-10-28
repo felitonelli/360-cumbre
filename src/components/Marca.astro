@@ -1,0 +1,18 @@
+---
+// El nombre como logotipo: la primera palabra derecha, el resto en itálica y
+// un punto de brasa en el medio. No reproduce el logo del complejo.
+import { site } from '../config/site';
+
+interface Props {
+  class?: string;
+}
+
+const { class: clase } = Astro.props;
+const [primera, ...resto] = site.nombreCorto.split(' ');
+---
+
+<span class:list={['font-display leading-none font-semibold whitespace-nowrap', clase]}>
+  {primera}{resto.length > 0 && <span class="mx-[0.18em] text-ambar-500" aria-hidden="true">·</span>}{
+    resto.length > 0 && <em>{resto.join(' ')}</em>
+  }
+</span>

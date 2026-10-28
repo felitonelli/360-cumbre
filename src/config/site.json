@@ -1,0 +1,46 @@
+{
+  "modoPropuesta": true,
+  "nombre": "Cabañas 360 Cumbre",
+  "nombreCorto": "360 Cumbre",
+  "eslogan": "Casas de montaña para parejas en El Durazno, Córdoba",
+  "urlSitio": "",
+  "whatsapp": "5493430000000",
+  "instagram": "360_cumbre",
+  "facebook": {
+    "nombre": "",
+    "url": ""
+  },
+  "direccion": {
+    "calle": "",
+    "localidad": "El Durazno",
+    "departamento": "Villa Yacanto, Calamuchita",
+    "provincia": "Córdoba",
+    "codigoPostal": ""
+  },
+  "coordenadas": {
+    "lat": -32.17416,
+    "lng": -64.76826
+  },
+  "mapa": {
+    "consulta": "SPA Termas del Sol, El Durazno, Córdoba",
+    "zoom": 14
+  },
+  "resenasGoogle": {
+    "puntaje": "",
+    "cantidad": "",
+    "url": ""
+  },
+  "mercadoPago": {
+    "activo": false,
+    "link": ""
+  },
+  "analitica": {
+    "activa": false,
+    "ga4Id": "",
+    "plausibleDominio": ""
+  },
+  "credito": {
+    "nombre": "Felipe",
+    "url": ""
+  }
+}

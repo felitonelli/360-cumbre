@@ -1,0 +1,121 @@
+---
+import '../styles/global.css';
+import { Font, getImage } from 'astro:assets';
+import { site } from '../config/site';
+import { colorNavegador, modoPorDefecto } from '../config/tema.mjs';
+import { complejo } from '../lib/contenido';
+import { sinPendientes } from '../lib/texto';
+import Analitica from '../components/Analitica.astro';
+import BandaPropuesta from '../components/BandaPropuesta.astro';
+import BarraReserva from '../components/BarraReserva.astro';
+import Cabecera from '../components/Cabecera.astro';
+import DatosEstructurados from '../components/DatosEstructurados.astro';
+import HojaConsulta from '../components/HojaConsulta.astro';
+import Pie from '../components/Pie.astro';
+
+interface Props {
+  titulo?: string;
+  descripcion?: string;
+  /** La portada lleva la cabecera transparente sobre la foto y los datos estructurados. */
+  esPortada?: boolean;
+}
+
+const datos = await complejo();
+const { esPortada = false } = Astro.props;
+const titulo = Astro.props.titulo ? `${Astro.props.titulo} | ${site.nombre}` : datos.seo.titulo;
+const descripcion = sinPendientes(Astro.props.descripcion ?? datos.seo.descripcion);
+
+// Sin urlSitio configurada (por ejemplo, en una plantilla nueva) se usa la URL actual.
+const origen = Astro.site ?? Astro.url;
+const canonica = new URL(Astro.url.pathname, origen).href;
+const imagen = await getImage({ src: datos.fotoPortadaDia, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 80 });
+const imagenUrl = new URL(imagen.src, origen).href;
+---
+
+<!doctype html>
+<html
+  lang="es-AR"
+  data-modo={modoPorDefecto}
+  data-analitica={site.analitica.activa ? 'on' : undefined}
+  class:list={[site.modoPropuesta && 'con-banda']}
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content={colorNavegador[modoPorDefecto]} />
+    <!-- El modo se decide antes de pintar, para que no haya un parpadeo:
+         lo que eligió el visitante, si no lo que pide su sistema y, si no pide
+         nada, el modo por defecto de tema.mjs. -->
+    <script is:inline define:vars={{ modoPorDefecto, colorNavegador }}>
+      var modo;
+      try {
+        modo = localStorage.getItem('modo');
+      } catch (e) {}
+      if (modo !== 'dia' && modo !== 'noche') {
+        modo = matchMedia('(prefers-color-scheme: light)').matches
+          ? 'dia'
+          : matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'noche'
+            : modoPorDefecto;
+      }
+      document.documentElement.dataset.modo = modo;
+      document.querySelector('meta[name="theme-color"]').content = colorNavegador[modo];
+    </script>
+    <title>{titulo}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="canonical" href={canonica} />
+    {site.modoPropuesta && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <Font cssVariable="--fuente-titulos" preload={[{ weight: 600, style: 'normal' }, { weight: 600, style: 'italic' }]} />
+    <Font cssVariable="--fuente-textos" preload />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:site_name" content={site.nombre} />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:url" content={canonica} />
+    <meta property="og:image" content={imagenUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={datos.fotoPortadaDiaAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={titulo} />
+    <meta name="twitter:description" content={descripcion} />
+    <meta name="twitter:image" content={imagenUrl} />
+
+    <!-- Activa las animaciones de scroll solo si hay JavaScript; si el script
+         que las dispara no llega a correr, la página se destapa sola. -->
+    <script is:inline>
+      document.documentElement.classList.add('animar');
+      setTimeout(function () {
+        if (!window.__aparecer) document.documentElement.classList.remove('animar');
+      }, 4000);
+    </script>
+
+    {esPortada && <DatosEstructurados descripcion={descripcion} imagen={imagenUrl} />}
+    {site.analitica.activa && <Analitica />}
+  </head>
+  <body>
+    <a
+      href="#contenido"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[110] focus:rounded-full focus:bg-crema-100 focus:px-5 focus:py-3 focus:font-bold focus:text-carbon-900"
+    >
+      Saltar al contenido
+    </a>
+    {site.modoPropuesta && <BandaPropuesta />}
+    <Cabecera sobreFoto={esPortada} />
+    <main id="contenido">
+      <slot />
+    </main>
+    <Pie />
+    <BarraReserva />
+    <HojaConsulta />
+    <script>
+      import '../scripts/aparecer';
+      import '../scripts/modo';
+    </script>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+nombre: Casa dos [a confirmar]
+capacidad: 2
+resumen: 'Lo que la hace distinta: [a confirmar].'
+detalles:
+  - icono: bed-double
+    texto: 'Cama: [a confirmar]'
+  - icono: flame-kindling
+    texto: 'Fogón: [a confirmar]'
+  - icono: mountain
+    texto: 'Vista: [a confirmar]'
+  - icono: wifi
+    texto: 'Wi-Fi: [a confirmar]'
+fotos:
+  - foto: ../../assets/fotos/cabanas/casa-dos/exterior.jpg
+    alt: Cabaña de madera iluminada, con un fogón encendido al frente
+  - foto: ../../assets/fotos/cabanas/casa-dos/fogon.jpg
+    alt: Fogón con campana de metal dentro de un ambiente de madera
+  - foto: ../../assets/fotos/cabanas/casa-dos/estar.jpg
+    alt: Living con salamandra y ventanales al monte
+orden: 2

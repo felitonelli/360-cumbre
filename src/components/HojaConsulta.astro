@@ -1,0 +1,200 @@
+---
+// Formulario "Consultar disponibilidad". En el celular sube desde abajo como
+// una hoja; en pantallas anchas aparece al medio. Lo abre cualquier link con
+// data-abrir-consulta (sin JavaScript, esos links van directo a WhatsApp).
+import { site } from '../config/site';
+import { complejo, ordenados } from '../lib/contenido';
+import { resaltar, sinPendientes, titular } from '../lib/texto';
+import Icono from './Icono.astro';
+import IconoMarca from './IconoMarca.astro';
+import Texto from './Texto.astro';
+
+const datos = await complejo();
+const { sobretitulo, titulo, texto } = datos.secciones.consulta;
+const { maximoPersonas, notaPersonas, ocasiones } = datos.consulta;
+const { condiciones } = datos;
+const cabanas = (await ordenados('cabanas')).map((c) => sinPendientes(c.data.nombre));
+const personas = Array.from({ length: maximoPersonas }, (_, i) => i + 1);
+const porDefecto = Math.min(2, maximoPersonas);
+
+const campo =
+  'mt-1.5 block min-h-13 w-full rounded-[0.8rem] border border-linea bg-superficie px-3.5 text-[1.0625rem] font-semibold text-tinta focus:border-acento focus:outline-none';
+const etiqueta = 'text-sm font-bold text-tinta-suave';
+---
+
+<dialog id="consulta" class="hoja" data-dialogo aria-labelledby="consulta-titulo">
+  <div class="mx-auto mt-2.5 h-1 w-10 rounded-full bg-linea sm:hidden" aria-hidden="true"></div>
+  <div class="flex items-start justify-between gap-4 px-5 pt-4 sm:px-8 sm:pt-8">
+    <div>
+      <p class="sobretitulo">{sobretitulo}</p>
+      <h2 id="consulta-titulo" class="mt-1.5 text-[2.3rem] leading-none outline-none" tabindex="-1" autofocus set:html={titular(titulo)} />
+    </div>
+    <button
+      type="button"
+      class="grid size-11 shrink-0 cursor-pointer place-items-center rounded-full border border-linea"
+      aria-label="Cerrar"
+      data-cerrar
+    >
+      <Icono nombre="x" class="size-5" />
+    </button>
+  </div>
+
+  <form
+    class="px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:px-8 sm:pb-8"
+    novalidate
+    data-consulta
+    data-whatsapp={site.whatsapp}
+    data-minimo={condiciones.estadiaMinima}
+  >
+    {texto && <p class="mt-2 text-[0.9375rem] text-tinta-suave" set:html={resaltar(texto)} />}
+
+    <div class="mt-5 grid grid-cols-2 gap-3">
+      <label class="block">
+        <span class={etiqueta}>Llegada</span>
+        <input type="date" name="ingreso" required class={campo} />
+      </label>
+      <label class="block">
+        <span class={etiqueta}>Salida</span>
+        <input type="date" name="salida" required class={campo} />
+      </label>
+    </div>
+    <p class="mt-2 min-h-6 font-bold text-acento" aria-live="polite" data-resumen></p>
+
+    <div class="mt-1 grid grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-3">
+      <label class="block">
+        <span class={etiqueta}>Personas</span>
+        <select name="personas" class={campo}>
+          {personas.map((n) => <option value={n} selected={n === porDefecto}>{n}</option>)}
+        </select>
+      </label>
+      <label class="block">
+        <span class={etiqueta}>Cabaña</span>
+        <select name="cabana" class={campo}>
+          <option value="">Me da igual</option>
+          {cabanas.map((nombre) => <option value={nombre}>{nombre}</option>)}
+        </select>
+      </label>
+    </div>
+    {
+      notaPersonas && (
+        <p class="mt-2 text-sm text-tinta-suave">
+          <Texto texto={notaPersonas} />
+        </p>
+      )
+    }
+
+    {
+      ocasiones.length > 0 && (
+        <fieldset class="mt-6">
+          <legend class={etiqueta}>¿Es una ocasión especial? <span class="font-normal">(opcional)</span></legend>
+          <div class="mt-2 flex flex-wrap gap-2">
+            {[{ nombre: 'No', frase: '' }, ...ocasiones].map((o) => (
+              <label class="opcion">
+                <input type="radio" name="ocasion" value={o.frase} checked={o.nombre === 'No'} class="sr-only" />
+                <span>{o.nombre}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      )
+    }
+
+    <label class="mt-6 block">
+      <span class={etiqueta}>Comentario <span class="font-normal">(opcional)</span></span>
+      <textarea
+        name="comentario"
+        rows="2"
+        class:list={[campo, 'py-3 font-normal']}
+        placeholder="Algo que quieran contarnos"></textarea>
+    </label>
+
+    <p class="mt-4 rounded-xl border border-current/30 px-4 py-3 font-semibold text-acento" role="alert" hidden data-error></p>
+    <p class="mt-4 rounded-xl bg-superficie px-4 py-3 text-[0.9375rem] text-tinta-suave" hidden data-aviso></p>
+
+    <button type="submit" class="btn btn-principal mt-6 w-full">
+      <IconoMarca marca="whatsapp" class="size-5" />
+      Armar mensaje de WhatsApp
+    </button>
+    <p class="mt-3 text-center text-sm text-tinta-suave">Se abre WhatsApp con el mensaje listo para mandar.</p>
+
+    <dl class="mt-6 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-linea pt-5 text-sm">
+      <div>
+        <dt class="text-tinta-suave">Ingreso</dt>
+        <dd class="font-semibold"><Texto texto={condiciones.checkIn} /></dd>
+      </div>
+      <div>
+        <dt class="text-tinta-suave">Salida</dt>
+        <dd class="font-semibold"><Texto texto={condiciones.checkOut} /></dd>
+      </div>
+      <div class="col-span-2">
+        <dt class="text-tinta-suave">Seña</dt>
+        <dd class="font-semibold"><Texto texto={condiciones.sena} /></dd>
+      </div>
+    </dl>
+  </form>
+</dialog>
+
+<style>
+  /* Celular: hoja pegada abajo. Desde 640 px: ventana al medio. */
+  .hoja {
+    width: 100%;
+    max-height: 92svh;
+    margin: auto 0 0;
+    overflow-y: auto;
+    border-radius: 1.6rem 1.6rem 0 0;
+    border-top: 1px solid var(--linea);
+  }
+
+  @media (width >= 40rem) {
+    .hoja {
+      width: min(34rem, 100% - 3rem);
+      max-height: min(52rem, 100svh - 3rem);
+      margin: auto;
+      border: 1px solid var(--linea);
+      border-radius: 1.6rem;
+    }
+  }
+
+  .opcion span {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    padding: 0 1rem;
+    border: 1px solid var(--linea);
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+
+  .opcion input:checked + span {
+    background: var(--tinta);
+    color: var(--fondo);
+    border-color: transparent;
+  }
+
+  .opcion input:focus-visible + span {
+    outline: 2px solid var(--acento);
+    outline-offset: 2px;
+  }
+</style>
+
+<script>
+  import { abrir } from '../scripts/dialogo';
+  import '../scripts/consulta';
+
+  const hoja = document.querySelector<HTMLDialogElement>('#consulta');
+  const cabana = hoja?.querySelector<HTMLSelectElement>('select[name="cabana"]');
+
+  document.querySelectorAll<HTMLElement>('[data-abrir-consulta]').forEach((boton) =>
+    boton.addEventListener('click', (e) => {
+      if (!hoja) return;
+      e.preventDefault();
+      // "Consultar por esta casa" deja la cabaña ya elegida.
+      if (cabana && boton.dataset.cabana !== undefined) cabana.value = boton.dataset.cabana;
+      abrir(hoja);
+    }),
+  );
+</script>

@@ -1,0 +1,45 @@
+---
+// Corte con silueta de sierra entre secciones, en lugar de una línea recta.
+// Va adentro de la sección de abajo: se pinta con su fondo y asoma por arriba.
+// Con soloLinea queda el filo dibujado, sin relleno.
+
+interface Props {
+  /** Cambia el dibujo de las cumbres, para que no se repita. */
+  variante?: 1 | 2 | 3;
+  soloLinea?: boolean;
+  class?: string;
+}
+
+const { variante = 1, soloLinea = false, class: clase } = Astro.props;
+
+// Alturas de cada cumbre (0 = abajo, 80 = arriba), repartidas a lo ancho.
+const CUMBRES = {
+  1: [18, 30, 24, 46, 34, 40, 58, 38, 50, 30, 42, 26, 34, 20],
+  2: [22, 36, 28, 32, 52, 40, 46, 30, 62, 44, 36, 48, 28, 24],
+  3: [26, 20, 40, 30, 36, 54, 42, 34, 46, 28, 50, 32, 24, 30],
+};
+
+const alturas = CUMBRES[variante];
+const paso = 1440 / (alturas.length - 1);
+const puntos = alturas.map((h, i) => `${Math.round(i * paso)} ${80 - h}`);
+const linea = `M${puntos.join(' L')}`;
+const relleno = `${linea} L1440 80 L0 80 Z`;
+---
+
+<svg
+  class:list={['pointer-events-none block h-9 w-full sm:h-14', !soloLinea && 'absolute inset-x-0 bottom-full', clase]}
+  viewBox="0 0 1440 80"
+  preserveAspectRatio="none"
+  aria-hidden="true"
+>
+  {!soloLinea && <path d={relleno} fill="var(--fondo)" />}
+  <path
+    d={linea}
+    fill="none"
+    stroke="var(--acento)"
+    stroke-width="1.5"
+    stroke-linejoin="round"
+    vector-effect="non-scaling-stroke"
+    opacity={soloLinea ? 0.8 : 0.55}
+  />
+</svg>

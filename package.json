@@ -1,0 +1,37 @@
+{
+  "name": "360-cumbre",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check": "astro check",
+    "pendientes": "node scripts/pendientes.mjs"
+  },
+  "dependencies": {
+    "@astrojs/react": "^7.0.1",
+    "@astrojs/sitemap": "^3.7.4",
+    "@keystatic/astro": "^6.0.0",
+    "@keystatic/core": "^0.6.9",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.8",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@iconify-json/lucide": "^1.2.143",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "simple-icons": "^16.35.0",
+    "typescript": "^6.0.3"
+  },
+  "description": "Sitio de un complejo de cabañas: Astro + Tailwind + Keystatic. Plantilla reutilizable para turismo.",
+  "private": true
+}

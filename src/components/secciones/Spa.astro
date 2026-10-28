@@ -1,0 +1,49 @@
+---
+import { Picture } from 'astro:assets';
+import { complejo } from '../../lib/contenido';
+import Encabezado from '../Encabezado.astro';
+import Sierra from '../Sierra.astro';
+import Texto from '../Texto.astro';
+
+const { secciones, spa } = await complejo();
+const { sobretitulo, titulo, texto } = secciones.spa;
+// Sin título, la sección no se muestra (para complejos sin spa).
+---
+
+{
+  titulo && (
+
+<section id="spa" class="respiro seccion">
+  <Sierra variante={2} />
+  <div class="contenedor grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:gap-24">
+    <div>
+      <Encabezado sobretitulo={sobretitulo} titulo={titulo} texto={texto} />
+      <dl class="mt-9 divide-y divide-linea border-y border-linea" data-aparece>
+        {
+          spa.puntos.map((p) => (
+            <div class="grid gap-1 py-4 sm:grid-cols-[11rem_1fr] sm:gap-6">
+              <dt class="font-bold">{p.titulo}</dt>
+              <dd class="text-tinta-suave">
+                <Texto texto={p.texto} />
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+    <div class="arco mx-auto aspect-4/5 w-full max-w-sm lg:max-w-none" data-aparece="arco">
+      <Picture
+        src={spa.foto}
+        alt={spa.fotoAlt}
+        formats={['avif']}
+        quality={55}
+        fallbackFormat="webp"
+        widths={[400, 640, 860]}
+        sizes="(min-width: 1024px) 26rem, (min-width: 640px) 24rem, 90vw"
+        class="h-full w-full object-cover"
+      />
+    </div>
+  </div>
+</section>
+  )
+}

@@ -1,0 +1,316 @@
+@import 'tailwindcss';
+
+/* La paleta está en src/config/tema.css y las tipografías en src/config/tema.mjs:
+   son los dos archivos de estilo que cambian de un complejo a otro. */
+@import '../config/tema.css';
+
+/* Las funciones de tema.css como colores de Tailwind (bg-fondo, text-tinta…).
+   Son variables: cambian solas con el modo y dentro de las secciones .respiro. */
+@theme inline {
+  --color-fondo: var(--fondo);
+  --color-superficie: var(--superficie);
+  --color-tinta: var(--tinta);
+  --color-tinta-suave: var(--tinta-suave);
+  --color-linea: var(--linea);
+  --color-acento: var(--acento);
+  --color-etiqueta: var(--etiqueta);
+  --color-boton: var(--boton);
+  --color-boton-hover: var(--boton-hover);
+  --color-sobre-boton: var(--sobre-boton);
+
+  --font-display: var(--fuente-titulos);
+  --font-sans: var(--fuente-textos);
+}
+
+@theme {
+  --color-whatsapp: #25d366;
+  --shadow-hondo: 0 30px 60px -30px rgb(0 0 0 / 0.55);
+  --shadow-brasa: 0 12px 32px -12px rgb(232 163 61 / 0.42);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    background: var(--fondo);
+  }
+
+  /* El cambio de modo se anima solo mientras dura (scripts/modo.ts pone la clase). */
+  .cambiando-modo,
+  .cambiando-modo * {
+    transition:
+      background-color 0.5s ease,
+      color 0.5s ease,
+      border-color 0.5s ease !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-fondo font-sans text-[1.0625rem] leading-relaxed text-tinta antialiased;
+  }
+
+  /* Grano de película, muy suave, encima de todo. */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: var(--grano);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display font-semibold text-balance;
+    letter-spacing: -0.01em;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  /* Deja aire arriba al saltar a un ancla, por el encabezado fijo. */
+  [id] {
+    scroll-margin-top: 4.5rem;
+  }
+
+  :focus-visible {
+    @apply rounded-sm outline-2 outline-offset-3 outline-acento;
+  }
+
+  ::selection {
+    @apply bg-acento text-fondo;
+  }
+}
+
+@layer components {
+  /* Secciones que toman los colores del otro modo (ver tema.css). */
+  .respiro,
+  .siempre-noche {
+    background-color: var(--fondo);
+    color: var(--tinta);
+  }
+
+  .contenedor {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  .seccion {
+    @apply relative py-18 sm:py-28;
+  }
+
+  .sobretitulo {
+    @apply text-[0.8125rem] font-bold tracking-[0.2em] text-acento uppercase;
+  }
+
+  .titulo {
+    @apply mt-3 text-[2.6rem] leading-[1.02] text-tinta sm:text-6xl;
+  }
+
+  .titulo em {
+    @apply font-semibold;
+  }
+
+  .bajada {
+    @apply mt-5 max-w-2xl text-lg text-tinta-suave sm:text-xl;
+  }
+
+  .btn {
+    @apply inline-flex min-h-14 cursor-pointer items-center justify-center gap-2.5 rounded-[0.9rem] px-7 py-3 text-center text-[1.0625rem] leading-tight font-bold transition duration-200;
+  }
+
+  .btn-principal {
+    @apply bg-boton text-sobre-boton shadow-brasa hover:bg-boton-hover;
+  }
+
+  .btn-contorno {
+    @apply border border-linea text-tinta hover:border-tinta;
+  }
+
+  /* Foto con forma de arco, como la ventana de una casa de montaña. */
+  .arco {
+    @apply overflow-hidden rounded-t-full rounded-b-[1.25rem] bg-superficie shadow-hondo;
+  }
+
+  /* Fila que se recorre de costado con el dedo y frena en cada elemento. */
+  .carril {
+    @apply flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain;
+    scrollbar-width: none;
+  }
+
+  .carril::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Dato que todavía hay que pedirle al dueño. */
+  .pendiente {
+    @apply inline-block rounded-md border border-dashed border-current px-1.5 align-[0.08em] font-sans text-[0.8125rem] leading-snug font-bold tracking-normal whitespace-nowrap text-acento not-italic;
+    background: color-mix(in srgb, var(--acento) 10%, transparent);
+  }
+}
+
+/* ---------- Ventanas: hoja de consulta y galerías ---------- */
+
+:root {
+  --banda: 0px;
+}
+
+.con-banda {
+  --banda: 3rem;
+}
+
+@media (width >= 40rem) {
+  .con-banda {
+    --banda: 2.25rem;
+  }
+}
+
+.con-dialogo {
+  overflow: hidden;
+}
+
+dialog[data-dialogo] {
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  border: 0;
+  background: var(--fondo);
+  color: var(--tinta);
+  overscroll-behavior: contain;
+}
+
+dialog[data-dialogo]::backdrop {
+  background: rgb(10 8 7 / 0.62);
+  backdrop-filter: blur(3px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  dialog[data-dialogo][open] {
+    animation: subir 0.45s var(--suave);
+  }
+
+  dialog[data-dialogo][open]::backdrop {
+    animation: aclarar 0.3s ease;
+  }
+
+  dialog[data-dialogo].cerrando {
+    animation: bajar 0.22s ease-in forwards;
+  }
+
+  dialog[data-dialogo].cerrando::backdrop {
+    animation: aclarar 0.22s ease reverse forwards;
+  }
+}
+
+@keyframes subir {
+  from {
+    transform: translate3d(0, 2.5rem, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes bajar {
+  to {
+    transform: translate3d(0, 2.5rem, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes aclarar {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ---------- Animaciones ----------
+   Solo se animan opacity y transform, que el navegador resuelve en la GPU sin
+   recalcular el layout. Con "reducir movimiento" activado no corre ninguna. */
+
+:root {
+  --suave: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Aparecer: scripts/aparecer.ts agrega .visible cuando el elemento entra en
+     pantalla; la clase .animar la pone el <head> solo si hay JavaScript. */
+  .animar [data-aparece] {
+    opacity: 0;
+    transform: translate3d(0, 1.75rem, 0);
+    transition:
+      opacity 0.7s var(--suave),
+      transform 0.9s var(--suave);
+  }
+
+  .animar [data-aparece='arco'] {
+    transform: scale(0.94);
+    transform-origin: 50% 100%;
+  }
+
+  .animar [data-aparece].visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* En los carriles del celular los elementos entran de costado con el dedo:
+     ahí aparece el carril entero, no cada ficha. */
+  @media (width < 64rem) {
+    .animar .carril > [data-aparece] {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* El texto de la portada entra escalonado al cargar. */
+  .portada-texto > * {
+    animation: entrar 1s var(--suave) both;
+  }
+
+  .portada-texto > :nth-child(2) {
+    animation-delay: 80ms;
+  }
+
+  .portada-texto > :nth-child(3) {
+    animation-delay: 160ms;
+  }
+
+  .portada-texto > :nth-child(4) {
+    animation-delay: 240ms;
+  }
+
+  .portada-texto > :nth-child(5) {
+    animation-delay: 320ms;
+  }
+
+  /* Los puntos de la línea de tiempo laten como una brasa. */
+  .brasa::after {
+    animation: latir 3.2s ease-in-out infinite;
+  }
+}
+
+@keyframes entrar {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.25rem, 0);
+  }
+}
+
+@keyframes latir {
+  50% {
+    opacity: 0.35;
+    transform: scale(1.6);
+  }
+}

@@ -1,0 +1,30 @@
+---
+import { complejo, ordenados } from '../../lib/contenido';
+import Encabezado from '../Encabezado.astro';
+import Sierra from '../Sierra.astro';
+
+const { sobretitulo, titulo, texto } = (await complejo()).secciones.testimonios;
+const testimonios = await ordenados('testimonios');
+---
+
+<section id="testimonios" class="respiro seccion overflow-hidden">
+  <Sierra variante={1} />
+  <div class="contenedor">
+    <Encabezado sobretitulo={sobretitulo} titulo={titulo} texto={texto} centrado />
+  </div>
+  <ul class="carril mt-12 scroll-px-5 px-5 sm:scroll-px-8 sm:px-8 lg:mx-auto lg:grid lg:max-w-6xl lg:grid-cols-3 lg:gap-6" data-aparece>
+    {
+      testimonios.map(({ data: t }) => (
+        <li class="flex w-[84%] shrink-0 snap-start flex-col rounded-[1.5rem] border border-linea bg-superficie p-7 sm:w-[24rem] lg:w-auto">
+          <span class="font-display text-6xl leading-[0.6] text-acento" aria-hidden="true">
+            “
+          </span>
+          <blockquote class="mt-4 flex-1 font-display text-[1.6rem] leading-[1.2] italic">{t.texto}</blockquote>
+          <p class="mt-6 font-bold">{t.nombre}</p>
+          <p class="text-[0.9375rem] text-tinta-suave">{t.origen}</p>
+          {t.esEjemplo && <p class="pendiente mt-4 self-start">Testimonio de ejemplo</p>}
+        </li>
+      ))
+    }
+  </ul>
+</section>

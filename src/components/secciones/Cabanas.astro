@@ -1,0 +1,209 @@
+---
+import { Picture } from 'astro:assets';
+import { PENDIENTE } from '../../config/site';
+import { complejo, ordenados } from '../../lib/contenido';
+import { sinPendientes } from '../../lib/texto';
+import Encabezado from '../Encabezado.astro';
+import Icono from '../Icono.astro';
+import Texto from '../Texto.astro';
+
+const { sobretitulo, titulo, texto } = (await complejo()).secciones.cabanas;
+const cabanas = await ordenados('cabanas');
+---
+
+<section id="cabanas" class="seccion overflow-hidden">
+  <!-- Luz de fogón detrás del título. -->
+  <div
+    class="pointer-events-none absolute top-0 left-1/2 h-[28rem] w-[40rem] -translate-x-1/2 bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--acento)_16%,transparent),transparent)]"
+  >
+  </div>
+
+  <div class="contenedor relative">
+    <Encabezado sobretitulo={sobretitulo} titulo={titulo} texto={texto} centrado />
+  </div>
+
+  <!-- En el celular las fichas se recorren de costado; en pantallas anchas
+       quedan una debajo de la otra, como páginas de revista. -->
+  <div
+    class="carril mt-10 scroll-px-5 px-5 sm:mt-14 sm:scroll-px-8 sm:px-8 lg:mx-auto lg:max-w-6xl lg:snap-none lg:flex-col lg:gap-28 lg:overflow-visible"
+    data-carril
+    data-aparece
+  >
+    {
+      cabanas.map(({ id, data: cabana }, i) => {
+        const nombre = sinPendientes(cabana.nombre);
+        const [portada] = cabana.fotos;
+        return (
+          <article
+            class:list={[
+              'ficha w-[84%] shrink-0 snap-start sm:w-[min(26rem,70%)] lg:grid lg:w-full lg:grid-cols-[minmax(0,27rem)_1fr] lg:items-center lg:gap-20',
+              i % 2 === 1 && 'lg:grid-cols-[1fr_minmax(0,27rem)] lg:[&>*:first-child]:order-2',
+            ]}
+            aria-label={nombre}
+          >
+            <button
+              type="button"
+              class="arco group relative block aspect-5/6 w-full cursor-zoom-in"
+              data-abrir-galeria={id}
+              aria-label={`Ver las fotos de ${nombre}`}
+              data-aparece="arco"
+            >
+              <Picture
+                src={portada.foto}
+                alt={portada.alt}
+                formats={['avif']}
+                quality={55}
+                fallbackFormat="webp"
+                widths={[420, 640, 860]}
+                sizes="(min-width: 1024px) 27rem, (min-width: 640px) 26rem, 84vw"
+                class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
+              />
+              <span class="absolute right-4 bottom-4 inline-flex items-center gap-1.5 rounded-full bg-carbon-950/70 px-3 py-1.5 text-sm font-bold text-crema-100 backdrop-blur-sm">
+                <Icono nombre="images" class="size-4" />
+                {cabana.fotos.length} fotos
+              </span>
+            </button>
+
+            <div class="pt-6 lg:pt-0">
+              <p class="sobretitulo">
+                {cabana.capacidad ? (
+                  `Para ${cabana.capacidad} personas`
+                ) : (
+                  <span>
+                    Capacidad: <Texto texto={PENDIENTE} />
+                  </span>
+                )}
+              </p>
+              <h3 class="mt-2 text-[2.5rem] leading-[1.02] italic sm:text-5xl lg:text-6xl">
+                <Texto texto={cabana.nombre} />
+              </h3>
+              <p class="mt-3 text-tinta-suave lg:text-lg">
+                <Texto texto={cabana.resumen} />
+              </p>
+              {cabana.detalles.length > 0 && (
+                <ul class="mt-5 space-y-3 border-t border-linea pt-5">
+                  {cabana.detalles.map((d) => (
+                    <li class="flex items-start gap-3">
+                      <Icono nombre={d.icono} class="mt-0.5 size-5 shrink-0 text-acento" />
+                      <span>
+                        <Texto texto={d.texto} />
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <div class="mt-7 hidden flex-wrap gap-3 lg:flex">
+                <a href="#consulta" class="btn btn-principal" data-abrir-consulta data-cabana={nombre}>
+                  Consultar por esta casa
+                </a>
+                <button type="button" class="btn btn-contorno" data-abrir-galeria={id}>
+                  Ver las fotos
+                </button>
+              </div>
+              <a
+                href="#consulta"
+                class="mt-6 inline-flex items-center gap-2 font-bold text-acento underline-offset-4 hover:underline lg:hidden"
+                data-abrir-consulta
+                data-cabana={nombre}
+              >
+                Consultar por esta casa
+                <Icono nombre="arrow-right" class="size-4" />
+              </a>
+            </div>
+          </article>
+        );
+      })
+    }
+  </div>
+
+  {
+    cabanas.length > 1 && (
+      <div class="mt-8 flex justify-center gap-2 lg:hidden" aria-hidden="true" data-puntos>
+        {cabanas.map((_, i) => (
+          <span class:list={['h-1 w-7 rounded-full bg-linea transition', i === 0 && 'activo']} />
+        ))}
+      </div>
+    )
+  }
+
+  {
+    cabanas.map(({ id, data: cabana }) => (
+      <dialog class="galeria siempre-noche" data-dialogo data-galeria={id} aria-label={`Fotos de ${sinPendientes(cabana.nombre)}`}>
+        <div class="flex items-center justify-between gap-4 px-5 py-4 sm:px-8">
+          <p class="font-display text-2xl italic">
+            <Texto texto={cabana.nombre} />
+          </p>
+          <button
+            type="button"
+            class="grid size-11 cursor-pointer place-items-center rounded-full border border-linea"
+            aria-label="Cerrar"
+            data-cerrar
+          >
+            <Icono nombre="x" class="size-5" />
+          </button>
+        </div>
+        <div class="carril min-h-0 flex-1 px-5 pb-6 sm:px-8 sm:pb-10" tabindex="0" autofocus aria-label="Fotos: deslizá de costado">
+          {cabana.fotos.map((f, i) => (
+            <figure class="flex h-full w-[88%] shrink-0 snap-center flex-col sm:w-[min(80%,60rem)]">
+              <Picture
+                src={f.foto}
+                alt={f.alt}
+                formats={['avif']}
+                quality={55}
+                fallbackFormat="webp"
+                widths={[640, 960, 1440]}
+                sizes="(min-width: 640px) 80vw, 88vw"
+                loading="lazy"
+                pictureAttributes={{ class: 'block min-h-0 flex-1' }}
+                class="h-full w-full rounded-[1.25rem] object-cover"
+              />
+              <figcaption class="mt-3 text-sm text-tinta-suave">
+                {i + 1} / {cabana.fotos.length} · {f.alt}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </dialog>
+    ))
+  }
+</section>
+
+<style>
+  .galeria[open] {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+  }
+
+  [data-puntos] .activo {
+    background: var(--acento);
+  }
+</style>
+
+<script>
+  import { abrir } from '../../scripts/dialogo';
+
+  document.querySelectorAll<HTMLElement>('[data-abrir-galeria]').forEach((boton) =>
+    boton.addEventListener('click', () => {
+      const galeria = document.querySelector<HTMLDialogElement>(`[data-galeria="${boton.dataset.abrirGaleria}"]`);
+      if (galeria) abrir(galeria);
+    }),
+  );
+
+  // Los puntos de abajo marcan qué ficha se está viendo en el celular.
+  const carril = document.querySelector('[data-carril]');
+  const puntos = document.querySelectorAll('[data-puntos] span');
+  if (carril && puntos.length) {
+    const fichas = [...carril.querySelectorAll('.ficha')];
+    const observador = new IntersectionObserver(
+      (entradas) =>
+        entradas.forEach((e) => {
+          if (e.isIntersecting) puntos.forEach((p, i) => p.classList.toggle('activo', fichas[i] === e.target));
+        }),
+      { root: carril, threshold: 0.6 },
+    );
+    fichas.forEach((f) => observador.observe(f));
+  }
+</script>

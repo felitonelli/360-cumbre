@@ -1,0 +1,55 @@
+---
+// Schema.org LodgingBusiness, para que Google entienda qué es y dónde queda.
+import { linkInstagram, linkMaps, site, telefono, urlSitio } from '../config/site';
+import { complejo, ordenados } from '../lib/contenido';
+import { sinPendientes } from '../lib/texto';
+
+interface Props {
+  descripcion: string;
+  imagen: string;
+}
+
+const { descripcion, imagen } = Astro.props;
+const { direccion, coordenadas } = site;
+const datos = await complejo();
+const cabanas = await ordenados('cabanas');
+
+// Solo lo confirmado: lo que todavía dice [a confirmar] no se publica.
+const confirmado = (texto: string) => !/\[a confirmar/i.test(texto);
+const comodidades = [
+  datos.secciones.spa.titulo.replace(/_/g, ''),
+  ...cabanas.flatMap((c) => c.data.detalles.map((d) => d.texto)),
+]
+  .filter((texto) => texto && confirmado(texto))
+  .map(sinPendientes);
+
+const esquema = {
+  '@context': 'https://schema.org',
+  '@type': 'LodgingBusiness',
+  '@id': `${urlSitio}/#alojamiento`,
+  name: site.nombre,
+  description: descripcion,
+  slogan: site.eslogan,
+  url: `${urlSitio}/`,
+  telephone: telefono,
+  image: [imagen],
+  address: {
+    '@type': 'PostalAddress',
+    ...(direccion.calle && { streetAddress: direccion.calle }),
+    addressLocality: [direccion.localidad, direccion.departamento].filter(Boolean).join(', '),
+    addressRegion: direccion.provincia,
+    ...(direccion.codigoPostal && { postalCode: direccion.codigoPostal }),
+    addressCountry: 'AR',
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: coordenadas.lat, longitude: coordenadas.lng },
+  hasMap: linkMaps,
+  sameAs: [linkInstagram, site.facebook.url].filter(Boolean),
+  amenityFeature: [...new Set(comodidades)].map((name) => ({
+    '@type': 'LocationFeatureSpecification',
+    name,
+    value: true,
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(esquema)} />

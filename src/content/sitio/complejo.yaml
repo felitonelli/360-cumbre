@@ -1,0 +1,130 @@
+seo:
+  titulo: Cabañas en El Durazno para parejas | 360 Cumbre
+  descripcion: >-
+    Casas de montaña para parejas en El Durazno, Villa Yacanto (Calamuchita,
+    Córdoba), en el mismo predio que el Spa Termas del Sol. Consultá
+    disponibilidad.
+portadaUbicacion: El Durazno · Calamuchita
+portadaTexto: Un fin de semana para ustedes dos, con las sierras de fondo.
+fotoPortadaDia: ../../assets/fotos/sitio/portadaDia.jpg
+fotoPortadaDiaAlt: Sierras de Córdoba con la luz de la tarde
+fotoPortadaNoche: ../../assets/fotos/sitio/portadaNoche.jpg
+fotoPortadaNocheAlt: Crestas de las sierras al atardecer, una detrás de otra
+secciones:
+  cabanas:
+    sobretitulo: Las casas
+    titulo: Pensadas _para dos_
+    texto: >-
+      Cabañas de montaña para parejas en El Durazno: madera, piedra y un deck
+      para mirar las sierras. Cuántas son y qué tiene cada una: [a confirmar].
+  spa:
+    sobretitulo: En el mismo predio
+    titulo: Spa _Termas del Sol_
+    texto: >-
+      Las casas están en el mismo predio que el Spa Termas del Sol, un complejo
+      de piletas climatizadas de El Durazno. Lo tienen ahí nomás, sin agarrar
+      el auto.
+  zona:
+    sobretitulo: Dónde estamos
+    titulo: El Durazno
+    texto: >-
+      Un paraje serrano del Valle de Calamuchita, cerca de Villa Yacanto, al
+      pie de las Sierras Grandes. Río, senderos y silencio, con el Champaquí
+      —el cerro más alto de Córdoba— de fondo.
+  finde:
+    sobretitulo: Un fin de semana en 360 Cumbre
+    titulo: Del viernes _al domingo_
+    texto: Así puede ser una escapada de dos noches. Los horarios son de referencia.
+  testimonios:
+    sobretitulo: Lo que dicen los huéspedes
+    titulo: Volvieron _distintos_
+    texto: ''
+  faq:
+    sobretitulo: Antes de reservar
+    titulo: Preguntas _frecuentes_
+    texto: ''
+  comoLlegar:
+    sobretitulo: Cómo llegar
+    titulo: El camino _a la cumbre_
+    texto: >-
+      El Durazno queda en el Valle de Calamuchita, pasando Villa Yacanto. Las
+      indicaciones exactas para llegar a las casas: [a confirmar].
+  consulta:
+    sobretitulo: Consultá disponibilidad
+    titulo: Elegí _tus fechas_
+    texto: >-
+      Te armamos el mensaje y lo mandás por WhatsApp. No guardamos ningún
+      dato.
+spa:
+  puntos:
+    - titulo: Qué es
+      texto: Un complejo de piletas climatizadas en El Durazno.
+    - titulo: Para los huéspedes
+      texto: 'Si el acceso está incluido o tiene descuento: [a confirmar].'
+    - titulo: Horarios
+      texto: '[a confirmar]'
+  foto: ../../assets/fotos/sitio/fotoSpa.jpg
+  fotoAlt: Pileta al aire libre rodeada de pasto, con las sierras de fondo
+zona:
+  puntos:
+    - icono: waves
+      titulo: El río
+      texto: 'El río El Durazno, para caminar por la orilla. Distancia: [a confirmar].'
+    - icono: map-pin
+      titulo: Villa Yacanto
+      texto: 'El pueblo más cercano, para hacer las compras. Distancia: [a confirmar].'
+    - icono: mountain
+      titulo: El Champaquí
+      texto: 'El cerro más alto de Córdoba, de fondo. Excursiones desde la zona: [a confirmar].'
+  foto: ../../assets/fotos/sitio/fotoZona.jpg
+  fotoAlt: Río de montaña entre piedras y monte serrano
+finde:
+  - cuando: Viernes, a la tarde
+    titulo: La llegada
+    texto: 'Abren la puerta y la casa ya está lista. Ingreso desde las [a confirmar].'
+    foto: ../../assets/fotos/finde/llegada.jpg
+    fotoAlt: Puertas de madera abiertas a un deck con vista a las sierras
+  - cuando: Al caer el sol
+    titulo: Atardecer en el deck
+    texto: El sol se esconde detrás de las sierras. Ustedes, afuera, con algo rico.
+    foto: ../../assets/fotos/finde/atardecer.jpg
+    fotoAlt: Baranda de madera de un deck con las montañas al atardecer
+  - cuando: De noche
+    titulo: Fogón
+    texto: 'Fuego, velas y cielo de montaña. Leña y fogón en cada casa: [a confirmar].'
+    foto: ../../assets/fotos/finde/fogon.jpg
+    fotoAlt: Fuego encendido en un fogón al aire libre
+  - cuando: Sábado
+    titulo: Spa en el predio
+    texto: 'Piletas climatizadas en el Spa Termas del Sol, ahí mismo. Condiciones: [a confirmar].'
+    foto: ../../assets/fotos/finde/spa.jpg
+    fotoAlt: Pileta al aire libre con las sierras de fondo
+  - cuando: Domingo, a la mañana
+    titulo: Desayuno con vista
+    texto: 'Café con las sierras enfrente. Desayuno incluido: [a confirmar]. Salida hasta las [a confirmar].'
+    foto: ../../assets/fotos/finde/desayuno.jpg
+    fotoAlt: Taza de té y desayuno sobre una mesa de madera al aire libre
+consulta:
+  maximoPersonas: 2
+  notaPersonas: 'Las casas son para parejas. Si se puede sumar a alguien más: [a confirmar].'
+  ocasiones:
+    - nombre: Aniversario
+      frase: Es por nuestro aniversario.
+    - nombre: Cumpleaños
+      frase: Es por un cumpleaños.
+    - nombre: Luna de miel
+      frase: Estamos de luna de miel.
+    - nombre: Otra
+      frase: Es una ocasión especial.
+condiciones:
+  sena: '[a confirmar]'
+  estadiaMinima: 1
+  checkIn: '[a confirmar]'
+  checkOut: '[a confirmar]'
+comoLlegar:
+  - desde: Desde Córdoba capital
+    texto: 'Por la ruta del Valle de Calamuchita hasta Villa Yacanto y de ahí a El Durazno. Ruta y tiempo de viaje: [a confirmar].'
+  - desde: Desde Villa General Belgrano
+    texto: '[a confirmar]'
+  - desde: El último tramo
+    texto: 'Estado del camino y si se puede llegar con cualquier auto: [a confirmar].'

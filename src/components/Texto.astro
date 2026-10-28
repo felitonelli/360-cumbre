@@ -1,0 +1,14 @@
+---
+// Texto del CMS con los "[a confirmar]" resaltados.
+import { parrafos, resaltar } from '../lib/texto';
+
+interface Props {
+  texto: string;
+  /** Respeta los saltos de párrafo (devuelve <p>). */
+  parrafos?: boolean;
+}
+
+const { texto, parrafos: conParrafos = false } = Astro.props;
+---
+
+<Fragment set:html={conParrafos ? parrafos(texto) : resaltar(texto)} />

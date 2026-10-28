@@ -1,0 +1,171 @@
+---
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { linkWhatsApp, site } from '../../config/site';
+import { complejo } from '../../lib/contenido';
+
+const datos = await complejo();
+const [primera, ...resto] = site.nombreCorto.split(' ');
+// Lo que el nombre completo tiene de más ("Cabañas") queda para los buscadores.
+const prefijo = site.nombre.replace(site.nombreCorto, '').trim();
+
+// La foto se muestra más ancha que la pantalla para poder recorrerla: en el
+// celular, a su proporción natural (alto completo); en pantallas anchas,
+// recortada como una panorámica. El celular pide hasta 1600 px, que alcanza
+// para la vista y cuida la primera carga. En pantallas anchas se recorta
+// poco, para que no se pierda la línea de las cumbres.
+const ANCHOS = { movil: [960, 1280, 1600], ancho: [1920, 2560, 3000] };
+const TAMANOS = { movil: '150vh', ancho: '130vw' };
+
+async function srcset(foto: ImageMetadata, recorte: keyof typeof ANCHOS) {
+  const variantes = await Promise.all(
+    ANCHOS[recorte]
+      .filter((w) => w <= foto.width)
+      .map(async (width) => {
+        // El velo oscuro de encima disimula la compresión.
+        const imagen = await getImage({ src: foto, width, format: 'avif', quality: 48 });
+        return `${imagen.src} ${width}w`;
+      }),
+  );
+  return variantes.join(', ');
+}
+
+const fotos = {
+  dia: { foto: datos.fotoPortadaDia, alt: datos.fotoPortadaDiaAlt },
+  noche: { foto: datos.fotoPortadaNoche, alt: datos.fotoPortadaNocheAlt },
+};
+const fuentes = Object.fromEntries(
+  await Promise.all(
+    Object.entries(fotos).map(async ([modo, { foto }]) => [
+      modo,
+      {
+        movil: await srcset(foto, 'movil'),
+        ancho: await srcset(foto, 'ancho'),
+        respaldo: (await getImage({ src: foto, width: 1600, format: 'webp', quality: 65 })).src,
+      },
+    ]),
+  ),
+) as Record<'dia' | 'noche', { movil: string; ancho: string; respaldo: string }>;
+---
+
+<section
+  class="portada relative isolate flex h-[calc(100svh-var(--banda))] min-h-[35rem] flex-col justify-end overflow-hidden bg-carbon-950 text-crema-100"
+  data-portada
+>
+  <!-- La panorámica. El navegador elige la foto según el modo del sistema; si
+       el visitante eligió otro, scripts/panorama.ts la cambia. -->
+  <div
+    class="panorama absolute inset-0 -z-20 cursor-grab touch-pan-y overflow-hidden select-none active:cursor-grabbing"
+    tabindex="0"
+    role="img"
+    aria-label={fotos.noche.alt}
+    data-alt-dia={fotos.dia.alt}
+    data-alt-noche={fotos.noche.alt}
+    data-panorama
+  >
+    <div class="pista h-full w-max" data-pista>
+      <picture data-foto-portada data-modo-foto="sistema">
+        <source media="(prefers-color-scheme: light) and (max-width: 767px)" type="image/avif" srcset={fuentes.dia.movil} sizes={TAMANOS.movil} />
+        <source media="(prefers-color-scheme: light)" type="image/avif" srcset={fuentes.dia.ancho} sizes={TAMANOS.ancho} />
+        <source media="(max-width: 767px)" type="image/avif" srcset={fuentes.noche.movil} sizes={TAMANOS.movil} />
+        <source type="image/avif" srcset={fuentes.noche.ancho} sizes={TAMANOS.ancho} />
+        <img
+          src={fuentes.noche.respaldo}
+          alt=""
+          width={datos.fotoPortadaNoche.width}
+          height={datos.fotoPortadaNoche.height}
+          fetchpriority="high"
+          decoding="async"
+          draggable="false"
+          class="foto-panorama"
+        />
+      </picture>
+    </div>
+  </div>
+
+  <!-- Las dos versiones para cambiar de foto con el interruptor. Un <template>
+       no se descarga hasta que se usa. -->
+  {
+    (['dia', 'noche'] as const).map((modo) => (
+      <template data-plantilla-portada={modo}>
+        <picture data-foto-portada data-modo-foto={modo}>
+          <source media="(max-width: 767px)" type="image/avif" srcset={fuentes[modo].movil} sizes={TAMANOS.movil} />
+          <source type="image/avif" srcset={fuentes[modo].ancho} sizes={TAMANOS.ancho} />
+          <img src={fuentes[modo].respaldo} alt="" decoding="async" draggable="false" class="foto-panorama" />
+        </picture>
+      </template>
+    ))
+  }
+
+  <div
+    class="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(20_17_15/0.55)_0%,rgb(20_17_15/0)_22%,rgb(20_17_15/0.3)_44%,rgb(20_17_15/0.84)_66%,#14110f_100%)] sm:bg-[linear-gradient(180deg,rgb(20_17_15/0.55)_0%,rgb(20_17_15/0.2)_18%,rgb(20_17_15/0.5)_38%,rgb(20_17_15/0.85)_68%,#14110f_100%)]"
+  >
+  </div>
+
+  <div
+    class="contenedor portada-texto pointer-events-none pb-[max(1.25rem,env(safe-area-inset-bottom))] text-center sm:pb-12"
+  >
+    <p class="text-[0.8125rem] font-bold tracking-[0.22em] text-ambar-300 uppercase [text-shadow:0_1px_14px_rgb(0_0_0/0.7)]">{datos.portadaUbicacion}</p>
+    <h1 class="mt-3 text-[clamp(3.9rem,19vw,8.5rem)] leading-[0.92]">
+      {prefijo && <span class="sr-only">{prefijo} </span>}
+      {primera}
+      {resto.length > 0 && <em class="block">{resto.join(' ')}</em>}
+    </h1>
+    <p class="mx-auto mt-4 max-w-[22rem] text-[1.1875rem] leading-snug text-crema-200 sm:max-w-xl sm:text-2xl">
+      {datos.portadaTexto}
+    </p>
+    <a
+      href={linkWhatsApp()}
+      class="btn btn-principal pointer-events-auto mt-6 w-full max-w-sm sm:w-auto"
+      data-abrir-consulta
+      data-cta-portada
+    >
+      Consultar disponibilidad
+    </a>
+    <p class="mt-4 flex items-center justify-center gap-2.5 text-[0.875rem] text-piedra-300" aria-hidden="true">
+      <svg viewBox="0 0 26 26" fill="none" stroke-width="2" class="size-6 -rotate-90">
+        <circle cx="13" cy="13" r="11" stroke="rgb(243 237 226 / 0.25)"></circle>
+        <circle cx="13" cy="13" r="11" stroke="var(--color-ambar-500)" stroke-linecap="round" class="aro" data-aro></circle>
+      </svg>
+      <span class="pointer-coarse:hidden">Arrastrá para mirar alrededor</span>
+      <span class="pointer-fine:hidden">Deslizá para mirar alrededor</span>
+    </p>
+  </div>
+</section>
+
+<style is:global>
+  .foto-panorama {
+    display: block;
+    width: max(130vw, 150vh);
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: 50% 42%;
+  }
+
+  [data-foto-portada] + [data-foto-portada] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+  }
+
+  [data-foto-portada].entrando {
+    opacity: 1;
+  }
+
+  .pista {
+    position: relative;
+    will-change: transform;
+  }
+
+  /* 69 = largo de la circunferencia del aro (2π · 11). */
+  .aro {
+    stroke-dasharray: 69.1;
+    stroke-dashoffset: 69.1;
+  }
+</style>
+
+<script>
+  import '../../scripts/panorama';
+</script>

@@ -1,0 +1,18 @@
+---
+// Íconos de Lucide, incrustados como SVG al compilar (no cargan nada en el navegador).
+import lucide from '@iconify-json/lucide/icons.json';
+
+interface Props {
+  nombre: string;
+  class?: string;
+}
+
+const { nombre, class: clase = 'size-6' } = Astro.props;
+const { icons, aliases } = lucide as {
+  icons: Record<string, { body: string }>;
+  aliases?: Record<string, { parent: string }>;
+};
+const icono = icons[nombre] ?? icons[aliases?.[nombre]?.parent ?? 'check'] ?? icons.check;
+---
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class={clase} aria-hidden="true" set:html={icono.body} />

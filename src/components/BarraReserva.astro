@@ -1,0 +1,65 @@
+---
+// Celular: barra fija abajo con "Elegí tus fechas" y WhatsApp. Aparece cuando
+// el botón de la portada sale de la pantalla. Pantallas anchas: el botón
+// redondo de WhatsApp en la esquina.
+import { linkWhatsApp } from '../config/site';
+import Icono from './Icono.astro';
+import IconoMarca from './IconoMarca.astro';
+---
+
+<div
+  class="barra fixed inset-x-0 bottom-0 z-30 flex gap-2.5 border-t border-linea bg-fondo/85 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-lg lg:hidden"
+  data-barra
+>
+  <a href={linkWhatsApp()} class="btn btn-principal min-h-13 flex-1 shadow-none" data-abrir-consulta>
+    <Icono nombre="calendar-days" class="size-5" />
+    Elegí tus fechas
+  </a>
+  <a
+    href={linkWhatsApp()}
+    target="_blank"
+    rel="noopener"
+    class="grid size-13 shrink-0 place-items-center rounded-[0.9rem] border border-linea bg-superficie text-whatsapp"
+    aria-label="Escribir por WhatsApp"
+    data-evento="whatsapp_click"
+    data-ubicacion="barra"
+  >
+    <IconoMarca marca="whatsapp" class="size-7" />
+  </a>
+</div>
+
+<a
+  href={linkWhatsApp()}
+  target="_blank"
+  rel="noopener"
+  aria-label="Escribir por WhatsApp"
+  data-evento="whatsapp_click"
+  data-ubicacion="flotante"
+  class="fixed right-6 bottom-6 z-30 hidden size-15 items-center justify-center rounded-full bg-whatsapp text-carbon-950 shadow-hondo transition duration-200 hover:scale-105 lg:flex"
+>
+  <IconoMarca marca="whatsapp" class="size-8" />
+</a>
+
+<style>
+  .barra {
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .barra.oculta {
+    transform: translateY(110%);
+  }
+</style>
+
+<script>
+  // Mientras se ve el botón de la portada, la barra no hace falta.
+  const barra = document.querySelector('[data-barra]');
+  const cta = document.querySelector('[data-cta-portada]');
+  if (barra && cta) {
+    barra.classList.add('oculta');
+    // Tapado por la cabecera fija (64 px) cuenta como fuera de pantalla.
+    new IntersectionObserver(
+      ([entrada]) => barra.classList.toggle('oculta', entrada.isIntersecting || entrada.boundingClientRect.top > innerHeight),
+      { rootMargin: '-64px 0px 0px 0px' },
+    ).observe(cta);
+  }
+</script>

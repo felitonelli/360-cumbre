@@ -1,0 +1,144 @@
+---
+import { linkWhatsApp } from '../config/site';
+import { complejo } from '../lib/contenido';
+import Icono from './Icono.astro';
+import IconoMarca from './IconoMarca.astro';
+import InterruptorModo from './InterruptorModo.astro';
+import Marca from './Marca.astro';
+
+interface Props {
+  /** En la portada arranca transparente, encima de la foto. */
+  sobreFoto?: boolean;
+}
+
+const { sobreFoto = false } = Astro.props;
+const { secciones } = await complejo();
+const sinMarcas = (texto: string) => texto.replace(/_/g, '');
+
+// Desde otras páginas los anclas vuelven a la portada.
+const base = Astro.url.pathname === '/' ? '' : '/';
+const enlaces = [
+  { href: '#cabanas', texto: secciones.cabanas.sobretitulo || 'Las casas' },
+  { href: '#spa', texto: secciones.spa.titulo && 'Spa' },
+  { href: '#el-durazno', texto: sinMarcas(secciones.zona.titulo) || 'La zona' },
+  { href: '#fin-de-semana', texto: 'Un fin de semana' },
+  { href: '#preguntas', texto: 'Preguntas' },
+  { href: '#como-llegar', texto: 'Cómo llegar' },
+].filter((e) => e.texto).map((e) => ({ ...e, href: base + e.href }));
+---
+
+<header class:list={['cabecera sticky top-0 z-40 -mb-16 h-16', sobreFoto ? 'sobre-foto' : 'solida']} data-cabecera>
+  <div class="contenedor flex h-full items-center gap-3">
+    <a href="/" class="mr-auto text-[1.6rem]">
+      <Marca />
+    </a>
+
+    <nav class="hidden lg:block" aria-label="Secciones">
+      <ul class="flex items-center gap-6 text-[0.9375rem] font-semibold">
+        {
+          enlaces.map((e) => (
+            <li>
+              <a href={e.href} class="opacity-85 transition hover:opacity-100">
+                {e.texto}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a
+      href={linkWhatsApp()}
+      target="_blank"
+      rel="noopener"
+      class="grid size-11 place-items-center rounded-full lg:hidden"
+      aria-label="Escribir por WhatsApp"
+      data-evento="whatsapp_click"
+      data-ubicacion="cabecera"
+    >
+      <IconoMarca marca="whatsapp" class="size-[1.35rem]" />
+    </a>
+
+    <InterruptorModo />
+
+    <a
+      href={linkWhatsApp()}
+      class="btn btn-principal ml-2 hidden min-h-11 px-5 text-base shadow-none lg:inline-flex"
+      data-abrir-consulta
+    >
+      Consultar
+    </a>
+
+    <details class="menu group relative lg:hidden">
+      <summary class="grid size-11 cursor-pointer list-none place-items-center rounded-full" aria-label="Menú">
+        <Icono nombre="menu" class="size-6 group-open:hidden" />
+        <Icono nombre="x" class="hidden size-6 group-open:block" />
+      </summary>
+      <nav
+        class="absolute top-full right-0 mt-3 w-64 rounded-2xl border border-linea bg-fondo p-2 text-tinta shadow-hondo"
+        aria-label="Secciones"
+      >
+        <ul>
+          {
+            enlaces.map((e) => (
+              <li>
+                <a href={e.href} class="block rounded-xl px-4 py-3 font-semibold hover:bg-superficie">
+                  {e.texto}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  .cabecera {
+    transition:
+      background-color 0.35s ease,
+      color 0.35s ease,
+      box-shadow 0.35s ease;
+  }
+
+  /* Encima de la foto: transparente y con texto claro en los dos modos. */
+  .sobre-foto:not(.solida) {
+    color: var(--color-crema-100);
+  }
+
+  .solida {
+    color: var(--tinta);
+    background: color-mix(in srgb, var(--fondo) 86%, transparent);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 1px 0 var(--linea);
+  }
+
+  .solida :global(.interruptor) {
+    background: transparent;
+  }
+
+  .menu summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
+
+<script>
+  // Al pasar la portada, la cabecera toma fondo propio.
+  const cabecera = document.querySelector<HTMLElement>('[data-cabecera]');
+  const portada = document.querySelector('[data-portada]');
+  if (cabecera && portada) {
+    new IntersectionObserver(([entrada]) => cabecera.classList.toggle('solida', !entrada.isIntersecting), {
+      rootMargin: '-64px 0px 0px 0px',
+    }).observe(portada);
+  }
+
+  // El menú del celular se cierra al elegir una sección o al tocar afuera.
+  const menu = document.querySelector<HTMLDetailsElement>('.menu');
+  menu?.addEventListener('click', (e) => {
+    if ((e.target as Element).closest('a')) menu.open = false;
+  });
+  document.addEventListener('click', (e) => {
+    if (menu?.open && !menu.contains(e.target as Node)) menu.open = false;
+  });
+</script>

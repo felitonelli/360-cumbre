@@ -1,0 +1,92 @@
+---
+import { direccionCompleta, embedMaps, linkMaps, site } from '../../config/site';
+import { complejo } from '../../lib/contenido';
+import Encabezado from '../Encabezado.astro';
+import Icono from '../Icono.astro';
+import Sierra from '../Sierra.astro';
+import Texto from '../Texto.astro';
+
+const datos = await complejo();
+const { sobretitulo, titulo, texto } = datos.secciones.comoLlegar;
+---
+
+<section id="como-llegar" class="seccion bg-fondo pt-6 sm:pt-10">
+  <Sierra variante={3} soloLinea class="mb-14 sm:mb-20" />
+  <div class="contenedor grid gap-10 lg:grid-cols-2 lg:gap-16">
+    <div>
+      <Encabezado sobretitulo={sobretitulo} titulo={titulo} texto={texto} />
+      <div data-aparece>
+        <p class="mt-7 flex gap-3 text-lg font-semibold">
+          <Icono nombre="map-pin" class="mt-0.5 size-6 shrink-0 text-acento" />
+          {direccionCompleta}
+        </p>
+        <dl class="mt-6 divide-y divide-linea border-y border-linea">
+          {
+            datos.comoLlegar.map((r) => (
+              <div class="py-4">
+                <dt class="font-bold">{r.desde}</dt>
+                <dd class="mt-1 text-tinta-suave">
+                  <Texto texto={r.texto} />
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+        <a
+          href={linkMaps}
+          target="_blank"
+          rel="noopener"
+          class="btn btn-contorno mt-8 w-full sm:w-auto"
+          data-evento="como_llegar_click"
+        >
+          <Icono nombre="navigation" class="size-5" />
+          Abrir en Google Maps
+        </a>
+      </div>
+    </div>
+
+    <!-- El mapa de Google pesa: se carga recién cuando el visitante lo pide. -->
+    <div
+      class="relative min-h-80 overflow-hidden rounded-t-[2.5rem] rounded-b-[1.25rem] border border-linea bg-superficie lg:min-h-full"
+      data-mapa={embedMaps}
+      data-aparece
+    >
+      <svg class="absolute inset-0 h-full w-full text-linea" aria-hidden="true">
+        <defs>
+          <pattern id="curvas" width="60" height="60" patternUnits="userSpaceOnUse">
+            <path d="M0 30 Q15 18 30 30 T60 30 M0 50 Q15 38 30 50 T60 50 M0 10 Q15 -2 30 10 T60 10" fill="none" stroke="currentColor" stroke-width="1" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#curvas)" />
+      </svg>
+      <button
+        type="button"
+        class="absolute inset-0 flex cursor-pointer flex-col items-center justify-center gap-4 p-6 text-center"
+        data-cargar-mapa
+      >
+        <span class="grid size-16 place-items-center rounded-full bg-boton text-sobre-boton shadow-brasa">
+          <Icono nombre="map-pin" class="size-7" />
+        </span>
+        <span class="font-display text-3xl">Ver el mapa</span>
+        <span class="max-w-xs text-sm text-tinta-suave">Se carga desde Google Maps.</span>
+      </button>
+      <noscript>
+        <a href={linkMaps} class="absolute inset-0" aria-label={`Ver ${site.nombre} en Google Maps`}></a>
+      </noscript>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-mapa]').forEach((caja) => {
+    caja.querySelector('[data-cargar-mapa]')?.addEventListener('click', () => {
+      const mapa = document.createElement('iframe');
+      mapa.src = caja.dataset.mapa!;
+      mapa.title = 'Mapa de ubicación';
+      mapa.referrerPolicy = 'no-referrer-when-downgrade';
+      mapa.allowFullscreen = true;
+      mapa.className = 'absolute inset-0 h-full w-full border-0';
+      caja.replaceChildren(mapa);
+    });
+  });
+</script>

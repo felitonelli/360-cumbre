@@ -1,0 +1,27 @@
+---
+// Pasa la página de noche a día y al revés. El estado lo maneja scripts/modo.ts.
+import Icono from './Icono.astro';
+---
+
+<button
+  type="button"
+  class="interruptor flex shrink-0 cursor-pointer gap-0.5 rounded-full border border-current/25 bg-carbon-950/30 p-1 backdrop-blur-sm"
+  aria-label="Modo noche"
+  aria-pressed="true"
+  data-interruptor
+>
+  <span class="i-dia grid size-9 place-items-center rounded-full transition duration-300">
+    <Icono nombre="sun" class="size-[1.15rem]" />
+  </span>
+  <span class="i-noche grid size-9 place-items-center rounded-full transition duration-300">
+    <Icono nombre="flame" class="size-[1.15rem]" />
+  </span>
+</button>
+
+<style>
+  :global([data-modo='dia']) .i-dia,
+  :global([data-modo='noche']) .i-noche {
+    background: var(--color-crema-100);
+    color: var(--color-carbon-900);
+  }
+</style>

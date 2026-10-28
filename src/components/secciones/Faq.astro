@@ -1,0 +1,38 @@
+---
+import { complejo, ordenados } from '../../lib/contenido';
+import Encabezado from '../Encabezado.astro';
+import Icono from '../Icono.astro';
+import Sierra from '../Sierra.astro';
+import Texto from '../Texto.astro';
+
+const { sobretitulo, titulo, texto } = (await complejo()).secciones.faq;
+const preguntas = await ordenados('faq');
+---
+
+<section id="preguntas" class="seccion bg-fondo">
+  <Sierra variante={2} />
+  <div class="contenedor grid gap-10 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-20">
+    <Encabezado sobretitulo={sobretitulo} titulo={titulo} texto={texto} />
+    <div class="divide-y divide-linea border-y border-linea" data-aparece>
+      {
+        preguntas.map(({ data: p }) => (
+          <details class="pregunta group">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-lg font-bold">
+              {p.pregunta}
+              <Icono nombre="plus" class="size-5 shrink-0 text-acento transition duration-300 group-open:rotate-45" />
+            </summary>
+            <div class="-mt-1 pb-6 text-tinta-suave">
+              <Texto texto={p.respuesta} parrafos />
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .pregunta summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
