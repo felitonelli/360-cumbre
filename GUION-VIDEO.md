@@ -34,6 +34,6 @@ Si te pasás de 45 segundos, recortá primero el scroll del medio.
 
 ## Mensaje para mandar con el video
 
-> ¡Hola! Soy Felipe, hago sitios web para complejos de cabañas. Armé una propuesta de web para 360 Cumbre, pensada para el link de la bio: el que entra ve las sierras, elige las casas y les escribe por WhatsApp con las fechas ya cargadas. Les mando un video de 40 segundos de cómo se ve en el celu. Las fotos son de muestra; con las de ustedes quedaría mucho mejor. Si les interesa, lo vemos en una videollamada de 15 minutos.
+> ¡Hola! Soy Felipe, hago sitios web para complejos de cabañas. Armé una propuesta de web para 360 Cumbre, pensada para el link de la bio: el que entra ve las sierras, elige las casas y les escribe por WhatsApp con las fechas ya cargadas. Les mando un video de 40 segundos de cómo se ve en el celu. Usé fotos de su Instagram para que vean cómo quedaría con lo de ustedes. Si les interesa, lo vemos en una videollamada de 15 minutos.
 
 Después del mensaje, el link al sitio publicado.

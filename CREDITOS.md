@@ -1,12 +1,31 @@
 # Créditos de las fotos
 
-Todas las fotos del sitio son de [Unsplash](https://unsplash.com), bajadas el 28/10/2026. Ninguna es del complejo ni de su Instagram.
-
-La [licencia de Unsplash](https://unsplash.com/license) permite usarlas gratis, también con fines comerciales, y no exige citar al autor. Igual se lo nombra acá y el pie del sitio aclara "Fotos ilustrativas de Unsplash" mientras dure el modo propuesta.
-
-**Son de muestra.** Con el permiso de los dueños, se reemplazan por las de su Instagram, que son muy buenas (ver [PENDIENTES.md](PENDIENTES.md)). Se pisan los mismos archivos y no hay que tocar nada más.
-
 Las rutas son relativas a `src/assets/fotos/`.
+
+## Fotos del complejo
+
+Son de los posteos de Instagram de [@360_cumbre](https://www.instagram.com/360_cumbre/). Las pasó Felipe el 28/10/2026 como capturas de pantalla (1206 px de ancho) y se les recortó el contador del carrusel ("3/7", "1/14"…).
+
+**Falta el permiso de los dueños** y saber quién las sacó. Para mostrarles la propuesta alcanza; para el sitio final hay que tener ese permiso y, mejor, los originales en alta resolución. Cuando lleguen, se pisan los mismos archivos y no hay que tocar nada más.
+
+**Qué foto va con qué casa** es una suposición: las de "Casa uno" salen de un posteo de 7 fotos y las de "Casa dos", de uno de 14, y los techos y las aberturas son distintos. Hay que confirmarlo (ver [PENDIENTES.md](PENDIENTES.md)).
+
+| Archivo | Dónde se usa | Qué muestra | Posteo |
+|---|---|---|---|
+| `cabanas/casa-uno/deck.jpg` | Casa uno: ficha | Deck techado con mesa y dos sillas, bosque con niebla | 3 de 7 |
+| `cabanas/casa-uno/dormitorio-vista.jpg` | Casa uno: galería | Dormitorio con ventanales y salida al deck | Sin contador |
+| `cabanas/casa-uno/dormitorio-piedra.jpg` | Casa uno: galería | Dormitorio con pared de piedra y baño en suite | 5 de 7 |
+| `cabanas/casa-uno/ventanales.jpg` | Casa uno: galería | Living en penumbra con ventanales a las sierras | 2 de 7 |
+| `cabanas/casa-dos/living.jpg` | Casa dos: ficha | Living con techo de madera y sol entrando | 1 de 14 |
+| `cabanas/casa-dos/vista-salamandra.jpg` | Casa dos: galería | Barra frente a los ventanales y salamandra | 4 de 14 |
+| `cabanas/casa-dos/cocina.jpg` | Casa dos: galería | Cocina con barra de piedra | 3 de 14 |
+| `finde/llegada.jpg` | Un fin de semana: la llegada | La misma del living de la Casa dos | 1 de 14 |
+| `finde/atardecer.jpg` | Un fin de semana: la tarde en el deck | La misma del deck de la Casa uno | 3 de 7 |
+| `finde/desayuno.jpg` | Un fin de semana: desayuno | La misma de la barra con vista | 4 de 14 |
+
+## Fotos de Unsplash
+
+Para lo que todavía no tiene foto propia. Bajadas el 28/10/2026. La [licencia de Unsplash](https://unsplash.com/license) permite usarlas gratis, también con fines comerciales, y no exige citar al autor; igual se lo nombra acá y el pie del sitio aclara que algunas fotos son ilustrativas.
 
 | Archivo | Dónde se usa | Qué muestra | Autor | Link |
 |---|---|---|---|---|
@@ -15,17 +34,8 @@ Las rutas son relativas a `src/assets/fotos/`.
 | `sitio/fotoSpa.jpg` | Spa Termas del Sol | Pileta al aire libre con sierras de fondo | Patti Black | [-JqgZy38gFg](https://unsplash.com/photos/-JqgZy38gFg) |
 | `finde/spa.jpg` | Un fin de semana: el spa | La misma del spa | Patti Black | [-JqgZy38gFg](https://unsplash.com/photos/-JqgZy38gFg) |
 | `sitio/fotoZona.jpg` | El Durazno | Río entre piedras (Traslasierra, Córdoba) | Gustavo Papasergio | [hsnhSgndwcY](https://unsplash.com/photos/hsnhSgndwcY) |
-| `cabanas/casa-uno/exterior.jpg` | Casa uno: ficha | Casa de piedra con luces en el balcón | Denis Gorbuleac | [FRIcEQcH4A4](https://unsplash.com/photos/FRIcEQcH4A4) |
-| `cabanas/casa-uno/estar.jpg` | Casa uno: galería | Living con hogar de piedra | Clay Banks | [Q0OitqGyVWA](https://unsplash.com/photos/Q0OitqGyVWA) |
-| `cabanas/casa-uno/deck.jpg` | Casa uno: galería | Deck de madera con vista a las sierras | Thamy N. | [tRNRQiRz_YQ](https://unsplash.com/photos/tRNRQiRz_YQ) |
-| `cabanas/casa-dos/exterior.jpg` | Casa dos: ficha | Cabaña de madera iluminada con fogón | Jonathan Adams | [wcpofj_J3mc](https://unsplash.com/photos/wcpofj_J3mc) |
-| `cabanas/casa-dos/fogon.jpg` | Casa dos: galería | Fogón con campana en un ambiente de madera | Andrey Swarga | [ZmaXfrhioMo](https://unsplash.com/photos/ZmaXfrhioMo) |
-| `cabanas/casa-dos/estar.jpg` | Casa dos: galería | Living con salamandra y ventanales | Clay Banks | [vNecZJJQRLE](https://unsplash.com/photos/vNecZJJQRLE) |
-| `finde/llegada.jpg` | Un fin de semana: la llegada | Puertas abiertas a un deck | Caroline Badran | [aPlq_OV6DaQ](https://unsplash.com/photos/aPlq_OV6DaQ) |
-| `finde/atardecer.jpg` | Un fin de semana: atardecer en el deck | Baranda de madera al atardecer | Pedro Oliveira | [XH_65mUxT98](https://unsplash.com/photos/XH_65mUxT98) |
 | `finde/fogon.jpg` | Un fin de semana: fogón | Fuego en un fogón al aire libre | R.D. Smith | [xGtkdXvt4k8](https://unsplash.com/photos/xGtkdXvt4k8) |
-| `finde/desayuno.jpg` | Un fin de semana: desayuno | Té y desayuno sobre una mesa de madera | Emmanuel Cassar | [hBP9So76AZE](https://unsplash.com/photos/hBP9So76AZE) |
 
-**Ojo con el spa.** La foto del spa es una pileta cualquiera, no la del Spa Termas del Sol. Sirve para la propuesta; para el sitio final hace falta una foto real del spa y permiso para usarla.
+**Ojo con el spa.** La foto del spa es una pileta cualquiera, no la del Spa Termas del Sol. Para el sitio final hace falta una foto real y permiso para usarla.
 
-**Para la portada** conviene una foto bien ancha (3000 px o más), porque se recorre de costado. Si los dueños tienen una panorámica tomada desde el complejo, es la ideal.
+**Para la portada** sigue haciendo falta una foto propia bien ancha (3000 px o más), porque se recorre de costado. Las del Instagram son verticales y no sirven para eso. Si los dueños tienen una panorámica tomada desde el complejo, es la ideal.

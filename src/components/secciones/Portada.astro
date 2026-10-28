@@ -3,6 +3,7 @@ import { getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { linkWhatsApp, site } from '../../config/site';
 import { complejo } from '../../lib/contenido';
+import Icono from '../Icono.astro';
 
 const datos = await complejo();
 const [primera, ...resto] = site.nombreCorto.split(' ');
@@ -121,6 +122,7 @@ const fuentes = Object.fromEntries(
       data-cta-portada
     >
       Consultar disponibilidad
+      <Icono nombre="arrow-right" class="flecha size-5" />
     </a>
     <p class="mt-4 flex items-center justify-center gap-2.5 text-[0.875rem] text-piedra-300" aria-hidden="true">
       <svg viewBox="0 0 26 26" fill="none" stroke-width="2" class="size-6 -rotate-90">

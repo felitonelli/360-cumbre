@@ -83,12 +83,12 @@ finde:
     titulo: La llegada
     texto: 'Abren la puerta y la casa ya está lista. Ingreso desde las [a confirmar].'
     foto: ../../assets/fotos/finde/llegada.jpg
-    fotoAlt: Puertas de madera abiertas a un deck con vista a las sierras
-  - cuando: Al caer el sol
-    titulo: Atardecer en el deck
-    texto: El sol se esconde detrás de las sierras. Ustedes, afuera, con algo rico.
+    fotoAlt: Living con techo de madera, sillones y el sol entrando por la puerta
+  - cuando: A la tarde
+    titulo: La tarde en el deck
+    texto: Mate o vino en el deck, con el bosque y las sierras enfrente. Ustedes, sin apuro.
     foto: ../../assets/fotos/finde/atardecer.jpg
-    fotoAlt: Baranda de madera de un deck con las montañas al atardecer
+    fotoAlt: Deck techado con mesa de madera y dos sillas, frente al bosque de pinos con niebla
   - cuando: De noche
     titulo: Fogón
     texto: 'Fuego, velas y cielo de montaña. Leña y fogón en cada casa: [a confirmar].'
@@ -103,7 +103,7 @@ finde:
     titulo: Desayuno con vista
     texto: 'Café con las sierras enfrente. Desayuno incluido: [a confirmar]. Salida hasta las [a confirmar].'
     foto: ../../assets/fotos/finde/desayuno.jpg
-    fotoAlt: Taza de té y desayuno sobre una mesa de madera al aire libre
+    fotoAlt: Barra frente a los ventanales con vista a las sierras
 consulta:
   maximoPersonas: 2
   notaPersonas: 'Las casas son para parejas. Si se puede sumar a alguien más: [a confirmar].'

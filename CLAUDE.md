@@ -9,9 +9,9 @@ Sitio estático de un complejo de cabañas (Astro + Tailwind + Keystatic). Es la
 - `keystatic.config.ts` y `src/content.config.ts` son espejo uno del otro: un campo nuevo va en los dos.
 - Keystatic y React se cargan solo en `astro dev`. El build tiene que seguir siendo 100 % estático, sin adaptador.
 - No inventar datos del negocio. Lo que falte se escribe `[a confirmar]` y se anota en `PENDIENTES.md`.
-- Mientras `modoPropuesta` sea `true`, no usar fotos ni logo del complejo real ni su número de WhatsApp.
+- Mientras `modoPropuesta` sea `true`, no usar el logo del complejo ni su número de WhatsApp. Las fotos de su Instagram se usan porque Felipe las pasó para la propuesta; para el sitio final hace falta el permiso de los dueños (ver `CREDITOS.md`).
 - Animaciones solo con `opacity` y `transform`, y todas apagadas con `prefers-reduced-motion`. Nada de librerías de animación.
-- Se publica en Cloudflare Pages: el push a `main` publica. No hacerlo sin que lo pidan.
+- Se publica desde `main` (Vercel o Cloudflare Pages): no hacer push sin que lo pidan.
 - Antes de dar algo por terminado: `npm run check` y `npm run build`.
 
 ## Development

@@ -2,7 +2,7 @@
 
 Sitio de una página para casas de montaña para parejas en El Durazno (Calamuchita, Córdoba). Está pensado como link de la bio de Instagram: el que entra ve las sierras, recorre las casas y consulta por WhatsApp con las fechas ya cargadas.
 
-Hoy está en **modo propuesta**. Es un trabajo de muestra para presentarles a los dueños, no el sitio oficial: tiene la banda de aviso, `noindex`, fotos de banco y un WhatsApp de prueba.
+Hoy está en **modo propuesta**. Es un trabajo de muestra para presentarles a los dueños, no el sitio oficial: tiene la banda de aviso, `noindex`, un WhatsApp de prueba y fotos de su Instagram (sin permiso todavía) junto con algunas de banco.
 
 - **Astro 7** + **Tailwind CSS 4**, 100 % estático, sin backend.
 - **Keystatic** como panel de contenido (corre solo en tu compu).
@@ -88,7 +88,11 @@ En los títulos, lo que va entre guiones bajos sale en itálica: `Pensadas _para
 
 El panel guarda en los archivos del repo: después de editar, hay que hacer commit y push para publicar.
 
-## Publicar en Cloudflare Pages
+## Publicar
+
+**Vercel** (pendiente de crear el proyecto): conectar `felitonelli/360-cumbre` como proyecto `360-cumbre-propuesta`, preset Astro (lo fija `vercel.json`, igual que en Alisos). Cada push a `main` publica. El plan Hobby es para uso no comercial: sirve para mostrar la propuesta; si pasa a ser el sitio de un cliente que paga, corresponde Pro o Cloudflare Pages.
+
+### Cloudflare Pages
 
 Una vez, desde el navegador (5 minutos):
 
@@ -120,7 +124,7 @@ Lo que hace el build en Cloudflare, sin tocar nada:
 
 ## Rendimiento
 
-Lighthouse 12.8 en modo móvil, contra el build local (`npm run preview`), el 28/10/2026, en modo propuesta y con las fotos de banco:
+Lighthouse 12.8 en modo móvil, contra el build local (`npm run preview`), el 28/10/2026, en modo propuesta, con 7 fotos de su Instagram y el resto de banco:
 
 | | Resultado |
 |---|---|
@@ -129,7 +133,7 @@ Lighthouse 12.8 en modo móvil, contra el build local (`npm run preview`), el 28
 | Buenas prácticas | 100 |
 | SEO | 69 |
 
-FCP 1,2 s · LCP 2,3 s · TBT 0 ms · CLS 0. El SEO da 69 a propósito: la única falla es el `noindex`, que es justamente lo que pide la propuesta. Con `modoPropuesta` en `false` se va.
+FCP 1,3 s · LCP 2,3 s · TBT 0 ms · CLS 0. El SEO da 69 a propósito: la única falla es el `noindex`, que es justamente lo que pide la propuesta. Con `modoPropuesta` en `false` se va.
 
 Es una medición local, sin compresión ni HTTP/2. Después del deploy conviene repetirla en <https://pagespeed.web.dev> con la URL real. El reporte completo queda en `.lighthouse/` (no se sube al repo).
 

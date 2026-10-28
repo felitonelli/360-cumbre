@@ -24,9 +24,12 @@ if (panorama && pista) {
   let corriendo = false;
   let centrada = false;
   let anterior = 0;
+  // Los anchos los da el ResizeObserver, que mide después del layout: leerlos
+  // a mano (offsetWidth) obligaría al navegador a recalcular la página.
+  const ancho = { panorama: 0, pista: 0 };
 
   const medir = () => {
-    recorrido = Math.max(0, pista.offsetWidth - panorama.clientWidth);
+    recorrido = Math.max(0, ancho.pista - ancho.panorama);
     // Arranca centrada: es la parte de la foto que mejor queda.
     if (!centrada && recorrido) {
       posicion = recorrido / 2;
@@ -130,13 +133,16 @@ if (panorama && pista) {
   }).observe(panorama);
   document.addEventListener('visibilitychange', actualizar);
 
-  new ResizeObserver(() => {
+  const observador = new ResizeObserver((entradas) => {
+    for (const e of entradas) {
+      ancho[e.target === pista ? 'pista' : 'panorama'] = e.borderBoxSize?.[0]?.inlineSize ?? e.contentRect.width;
+    }
     medir();
     pintar();
-  }).observe(panorama);
+  });
+  observador.observe(panorama);
+  observador.observe(pista);
 
-  medir();
-  pintar();
   reanudar();
 
   // ---------- Cambio de foto con el modo ----------

@@ -129,16 +129,173 @@
     @apply mt-5 max-w-2xl text-lg text-tinta-suave sm:text-xl;
   }
 
+  /* Botones: relieve suave (luz arriba, sombra abajo), un brillo de brasa
+     alrededor y, al pasar el mouse, un destello que los cruza. */
   .btn {
-    @apply inline-flex min-h-14 cursor-pointer items-center justify-center gap-2.5 rounded-[0.9rem] px-7 py-3 text-center text-[1.0625rem] leading-tight font-bold transition duration-200;
+    @apply relative isolate inline-flex min-h-14 cursor-pointer items-center justify-center gap-2.5 overflow-hidden rounded-[0.95rem] px-7 py-3 text-center text-[1.0625rem] leading-tight font-bold tracking-[0.01em] select-none;
+    transition:
+      transform 0.35s var(--suave),
+      box-shadow 0.35s var(--suave),
+      background-color 0.35s ease,
+      border-color 0.35s ease;
+  }
+
+  .btn:active {
+    transform: translateY(1px) scale(0.985);
+  }
+
+  .btn .flecha,
+  .btn .flecha-diagonal {
+    transition: transform 0.35s var(--suave);
   }
 
   .btn-principal {
-    @apply bg-boton text-sobre-boton shadow-brasa hover:bg-boton-hover;
+    @apply text-sobre-boton;
+    background-color: var(--boton);
+    background-image: linear-gradient(180deg, var(--boton-arriba), var(--boton) 50%, var(--boton-abajo));
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.2),
+      inset 0 -1px 0 rgb(0 0 0 / 0.22),
+      0 1px 2px rgb(0 0 0 / 0.25),
+      0 12px 30px -12px var(--brillo-boton);
+  }
+
+  .btn-principal::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.2) 50%, transparent 65%);
+    transform: translateX(-110%);
   }
 
   .btn-contorno {
-    @apply border border-linea text-tinta hover:border-tinta;
+    @apply border border-linea text-tinta;
+    background-color: color-mix(in srgb, var(--tinta) 4%, transparent);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--tinta) 7%, transparent);
+  }
+
+  @media (hover: hover) {
+    .btn-principal:hover {
+      transform: translateY(-1px);
+      box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 0.24),
+        inset 0 -1px 0 rgb(0 0 0 / 0.22),
+        0 2px 4px rgb(0 0 0 / 0.25),
+        0 18px 38px -12px var(--brillo-boton);
+    }
+
+    .btn-principal:hover::after {
+      transform: translateX(110%);
+      transition: transform 0.9s var(--suave);
+    }
+
+    .btn-contorno:hover {
+      border-color: color-mix(in srgb, var(--tinta) 45%, transparent);
+      background-color: color-mix(in srgb, var(--tinta) 8%, transparent);
+    }
+
+    .btn:hover .flecha,
+    .enlace:hover .flecha {
+      transform: translateX(3px);
+    }
+
+    .btn:hover .flecha-diagonal {
+      transform: translate(2px, -2px);
+    }
+  }
+
+  .enlace .flecha {
+    transition: transform 0.35s var(--suave);
+  }
+
+  /* Campos del formulario. */
+  .campo {
+    @apply mt-1.5 block min-h-13 w-full rounded-[0.85rem] border border-linea bg-superficie px-3.5 text-[1.0625rem] font-semibold text-tinta;
+    box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.14);
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .campo:hover {
+    border-color: color-mix(in srgb, var(--tinta) 32%, transparent);
+  }
+
+  .campo:focus {
+    outline: none;
+    border-color: var(--acento);
+    box-shadow:
+      inset 0 1px 2px rgb(0 0 0 / 0.14),
+      0 0 0 3px color-mix(in srgb, var(--acento) 26%, transparent);
+  }
+
+  select.campo {
+    appearance: none;
+    padding-right: 2.5rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239c9187' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-position: right 0.85rem center;
+    background-repeat: no-repeat;
+    background-size: 1.15rem;
+  }
+
+  /* Opciones como píldoras (radio buttons escondidos). */
+  .opcion span {
+    @apply inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-linea px-4 font-semibold;
+    background-color: color-mix(in srgb, var(--tinta) 3%, transparent);
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .opcion span::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    border: 1.5px solid color-mix(in srgb, var(--tinta) 40%, transparent);
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .opcion:hover span {
+    border-color: color-mix(in srgb, var(--tinta) 35%, transparent);
+  }
+
+  .opcion input:checked + span {
+    border-color: var(--acento);
+    background-color: color-mix(in srgb, var(--acento) 14%, var(--superficie));
+  }
+
+  .opcion input:checked + span::before {
+    border-color: var(--acento);
+    background-color: var(--acento);
+  }
+
+  .opcion input:focus-visible + span {
+    outline: 2px solid var(--acento);
+    outline-offset: 2px;
+  }
+
+  /* Botón redondo con ícono (cerrar, WhatsApp de la barra…). */
+  .boton-icono {
+    @apply grid size-11 shrink-0 cursor-pointer place-items-center rounded-full border border-linea;
+    background-color: color-mix(in srgb, var(--tinta) 4%, transparent);
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .boton-icono:hover {
+    border-color: color-mix(in srgb, var(--tinta) 40%, transparent);
+    background-color: color-mix(in srgb, var(--tinta) 9%, transparent);
+  }
+
+  .boton-icono:active {
+    transform: scale(0.94);
   }
 
   /* Foto con forma de arco, como la ventana de una casa de montaña. */

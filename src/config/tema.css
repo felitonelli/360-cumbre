@@ -79,5 +79,9 @@
 :root {
   --boton: var(--color-cobre-600);
   --boton-hover: var(--color-cobre-700);
+  /* Los extremos del degradé del botón; el texto queda sobre el centro. */
+  --boton-arriba: #ab5d29;
+  --boton-abajo: #93501f;
+  --brillo-boton: rgb(232 163 61 / 0.45);
   --sobre-boton: #fff8ef;
 }

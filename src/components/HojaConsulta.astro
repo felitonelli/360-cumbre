@@ -17,8 +17,7 @@ const cabanas = (await ordenados('cabanas')).map((c) => sinPendientes(c.data.nom
 const personas = Array.from({ length: maximoPersonas }, (_, i) => i + 1);
 const porDefecto = Math.min(2, maximoPersonas);
 
-const campo =
-  'mt-1.5 block min-h-13 w-full rounded-[0.8rem] border border-linea bg-superficie px-3.5 text-[1.0625rem] font-semibold text-tinta focus:border-acento focus:outline-none';
+const campo = 'campo';
 const etiqueta = 'text-sm font-bold text-tinta-suave';
 ---
 
@@ -29,12 +28,7 @@ const etiqueta = 'text-sm font-bold text-tinta-suave';
       <p class="sobretitulo">{sobretitulo}</p>
       <h2 id="consulta-titulo" class="mt-1.5 text-[2.3rem] leading-none outline-none" tabindex="-1" autofocus set:html={titular(titulo)} />
     </div>
-    <button
-      type="button"
-      class="grid size-11 shrink-0 cursor-pointer place-items-center rounded-full border border-linea"
-      aria-label="Cerrar"
-      data-cerrar
-    >
+    <button type="button" class="boton-icono" aria-label="Cerrar" data-cerrar>
       <Icono nombre="x" class="size-5" />
     </button>
   </div>
@@ -155,30 +149,6 @@ const etiqueta = 'text-sm font-bold text-tinta-suave';
     }
   }
 
-  .opcion span {
-    display: inline-flex;
-    min-height: 2.75rem;
-    align-items: center;
-    padding: 0 1rem;
-    border: 1px solid var(--linea);
-    border-radius: 999px;
-    font-weight: 600;
-    cursor: pointer;
-    transition:
-      background-color 0.2s,
-      color 0.2s;
-  }
-
-  .opcion input:checked + span {
-    background: var(--tinta);
-    color: var(--fondo);
-    border-color: transparent;
-  }
-
-  .opcion input:focus-visible + span {
-    outline: 2px solid var(--acento);
-    outline-offset: 2px;
-  }
 </style>
 
 <script>

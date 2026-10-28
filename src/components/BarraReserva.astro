@@ -11,7 +11,7 @@ import IconoMarca from './IconoMarca.astro';
   class="barra fixed inset-x-0 bottom-0 z-30 flex gap-2.5 border-t border-linea bg-fondo/85 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-lg lg:hidden"
   data-barra
 >
-  <a href={linkWhatsApp()} class="btn btn-principal min-h-13 flex-1 shadow-none" data-abrir-consulta>
+  <a href={linkWhatsApp()} class="btn btn-principal min-h-13 flex-1" data-abrir-consulta>
     <Icono nombre="calendar-days" class="size-5" />
     Elegí tus fechas
   </a>
@@ -19,7 +19,7 @@ import IconoMarca from './IconoMarca.astro';
     href={linkWhatsApp()}
     target="_blank"
     rel="noopener"
-    class="grid size-13 shrink-0 place-items-center rounded-[0.9rem] border border-linea bg-superficie text-whatsapp"
+    class="boton-icono size-13 rounded-[0.95rem] text-whatsapp"
     aria-label="Escribir por WhatsApp"
     data-evento="whatsapp_click"
     data-ubicacion="barra"

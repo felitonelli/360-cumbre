@@ -11,10 +11,12 @@ detalles:
   - icono: coffee
     texto: 'Cocina y desayuno: [a confirmar]'
 fotos:
-  - foto: ../../assets/fotos/cabanas/casa-uno/exterior.jpg
-    alt: Casa de piedra con las luces del balcón encendidas al anochecer
-  - foto: ../../assets/fotos/cabanas/casa-uno/estar.jpg
-    alt: Living con hogar de piedra y vigas de madera
   - foto: ../../assets/fotos/cabanas/casa-uno/deck.jpg
-    alt: Deck de madera con vista a las sierras
+    alt: Deck techado con mesa de madera y dos sillas, frente al bosque de pinos con niebla
+  - foto: ../../assets/fotos/cabanas/casa-uno/dormitorio-vista.jpg
+    alt: Dormitorio con ventanales al bosque y salida al deck
+  - foto: ../../assets/fotos/cabanas/casa-uno/dormitorio-piedra.jpg
+    alt: Dormitorio con pared de piedra, lámparas de mimbre y baño en suite
+  - foto: ../../assets/fotos/cabanas/casa-uno/ventanales.jpg
+    alt: Living en penumbra con ventanales a las sierras nubladas
 orden: 1

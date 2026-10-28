@@ -11,10 +11,10 @@ detalles:
   - icono: wifi
     texto: 'Wi-Fi: [a confirmar]'
 fotos:
-  - foto: ../../assets/fotos/cabanas/casa-dos/exterior.jpg
-    alt: Cabaña de madera iluminada, con un fogón encendido al frente
-  - foto: ../../assets/fotos/cabanas/casa-dos/fogon.jpg
-    alt: Fogón con campana de metal dentro de un ambiente de madera
-  - foto: ../../assets/fotos/cabanas/casa-dos/estar.jpg
-    alt: Living con salamandra y ventanales al monte
+  - foto: ../../assets/fotos/cabanas/casa-dos/living.jpg
+    alt: Living con techo de madera, sillones y el sol entrando por la puerta
+  - foto: ../../assets/fotos/cabanas/casa-dos/vista-salamandra.jpg
+    alt: Barra frente a los ventanales con vista a las sierras, junto a la salamandra
+  - foto: ../../assets/fotos/cabanas/casa-dos/cocina.jpg
+    alt: Cocina con barra de piedra y estantes de madera iluminados
 orden: 2

@@ -44,12 +44,13 @@ Ordenadas para hacerlas de corrido. Las marcadas con ★ son las que más cambia
 
 ### Fotos, marca y contacto
 
-23. ★ ¿Nos dan permiso para usar las fotos de su Instagram? Son muy buenas y reemplazan a las de banco de imágenes. Ideal: los originales en alta resolución y una panorámica ancha tomada desde el complejo para la portada.
-24. El logo en vector (SVG, PDF o AI). No se usa mientras sea una propuesta.
-25. ¿Cómo prefieren que figure el nombre: "Cabañas 360 Cumbre", "360 Cumbre" o "Cabañas El Durazno" (como dice el perfil)?
-26. El número de WhatsApp para las consultas.
-27. ¿Tienen reseñas en Google, Booking o Airbnb? Con permiso, reemplazan los testimonios de ejemplo. ¿Puntaje y cantidad en Google?
-28. ¿Facebook? ¿Tienen dominio propio o hay que comprarlo (por ejemplo, `360cumbre.com.ar`)?
+23. ★ La propuesta ya usa 7 fotos de su Instagram (ver [CREDITOS.md](CREDITOS.md)). ¿Nos dan permiso? ¿Quién las sacó? Ideal: los originales en alta resolución, más fotos de cada casa y una panorámica ancha tomada desde el complejo para la portada.
+24. ★ Esas fotos, ¿son de dos casas distintas? Las repartí según el posteo del que salen (uno de 7 fotos y otro de 14).
+25. El logo en vector (SVG, PDF o AI). No se usa mientras sea una propuesta.
+26. ¿Cómo prefieren que figure el nombre: "Cabañas 360 Cumbre", "360 Cumbre" o "Cabañas El Durazno" (como dice el perfil)?
+27. El número de WhatsApp para las consultas.
+28. ¿Tienen reseñas en Google, Booking o Airbnb? Con permiso, reemplazan los testimonios de ejemplo. ¿Puntaje y cantidad en Google?
+29. ¿Facebook? ¿Tienen dominio propio o hay que comprarlo (por ejemplo, `360cumbre.com.ar`)?
 
 ## Para vos, antes de mostrarla
 
@@ -62,7 +63,7 @@ Ordenadas para hacerlas de corrido. Las marcadas con ★ son las que más cambia
 ## Para pasar a sitio oficial
 
 - [ ] Datos confirmados en el panel y `npm run pendientes` sin líneas.
-- [ ] Fotos y logo del complejo, con permiso.
+- [ ] Permiso para las fotos del complejo (y los originales), foto real del spa y logo.
 - [ ] WhatsApp real del complejo en `site.json`.
 - [ ] `modoPropuesta` en `false`: saca la banda, el `noindex` y el aviso de fotos ilustrativas, y genera el sitemap.
 - [ ] Dominio propio en Cloudflare Pages y `urlSitio` completo.
